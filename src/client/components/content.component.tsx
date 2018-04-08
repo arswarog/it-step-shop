@@ -26,10 +26,14 @@ export class ContentComponent extends React.Component<IContentProps, IContentSta
                 photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
             },
         ];
+
+        let product = <ProductComponent product={products[0]}/>
+
         return (
             <div className="content">
-                Товары
-                {products.map(item => <ProductComponent key={item.id} product={item} />)}
+                <h2>Товары</h2>
+                {product}
+
             </div>
         );
     }
