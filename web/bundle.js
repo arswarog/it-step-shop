@@ -69,9 +69,14 @@ var ContentComponent = /** @class */ (function (_super) {
                 photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
             },
         ];
+        var items = [];
+        for (var i = 0; i < products.length; i++) {
+            items.push(React.createElement(product_component_1.ProductComponent, { product: products[i] }));
+        }
         return (React.createElement("div", { className: "content" },
-            "\u0422\u043E\u0432\u0430\u0440\u044B",
-            products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { key: item.id, product: item }); })));
+            React.createElement("h2", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
+            items,
+            comp));
     };
     return ContentComponent;
 }(React.Component));
