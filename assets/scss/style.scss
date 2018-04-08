@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+}
+.header {
+    width: 100%;
+    background: lightgreen;
+}
+.sidebar {
+    float: left;
+    width: 200px;
+    margin: 5px;
+    border: 1px solid lightgreen;
+}
+.content {
+    margin: 5px 5px 5px 210px;
+    border: 1px solid lightcyan;
+}
+.footer {
+    clear: both;
+    width: 100%;
+    background: lightgreen;
+}
+.product {
+    height: 210px;
+    img {
+        float: left;
+        max-width: 200px;
+        max-height: 200px;
+    }
+    & > div {
+        margin: 5px 5px 5px 210px;
+    }
+}

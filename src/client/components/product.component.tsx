@@ -11,11 +11,14 @@ export interface IProductProps {
 export class ProductComponent extends React.Component<IProductProps, IProductState> {
     render() {
         return (
-            <div className="content">
+            <div className="product">
+                <img src={this.props.product.photos[0]} />
                 Продукт { this.props.product.name }<br/>
                 { this.props.product.description }<br/>
                 Цена { this.props.product.price }р.
-
+                <div>
+                    <div>asdasd</div>
+                </div>
             </div>
         );
     }
