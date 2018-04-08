@@ -1,14 +1,31 @@
 import * as React from 'react';
-import { ProductComponent } from './product.component';
 import { Product } from '../app/classes';
 
-export interface IContentState {
+export interface IBasketState {
+    count: number
 }
 
-export interface IContentProps {
+export interface IBasketProps {
 }
 
-export class ContentComponent extends React.Component<IContentProps, IContentState> {
+
+export class BasketComponent extends React.Component<IBasketProps, IBasketState> {
+    constructor(props,state) {
+        super(props,{
+            count : 0
+        });
+
+        this.alert = this.alert.bind(this);
+        // this.setState({count: 0})
+    }
+
+    alert() {
+        let count = this.state.count
+        alert("Потом вы таки будете перенаправлены на корзину!"+count);
+        this.setState({
+            count: count
+        })
+    }
     render() {
         let products: Product[] = [
             {
@@ -26,19 +43,23 @@ export class ContentComponent extends React.Component<IContentProps, IContentSta
                 photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
             },
         ];
-
-        //let product = <ProductComponent product={products[0]} />
-        /*let items = [];
-        products.forEach(element => {
-            items.push(<ProductComponent product={element} />)
-        });*/
-        let items = products.map(item=><ProductComponent product={item}/>); 
+        let subStr = "";
+        if (products.length>0) {
+            let totalSumm = 0;
+            products.forEach(element => {
+                subStr += element.name + ", ";
+                totalSumm += element.price;
+            });
+            subStr += products.length + " товаров на сумму " + totalSumm;
+        } else {
+            subStr = "пустая корзина";
+        }
 
         return (
-            <div className="content">
-                <h1>Товары</h1>
-                {items}
+              
+            <div className="basket" onClick={this.alert}>
+                {subStr} 
             </div>
-        );
+        )
     }
 }
