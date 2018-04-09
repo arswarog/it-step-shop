@@ -75,8 +75,7 @@ var ContentComponent = /** @class */ (function (_super) {
         }
         return (React.createElement("div", { className: "content" },
             React.createElement("h2", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
-            items,
-            comp));
+            items));
     };
     return ContentComponent;
 }(React.Component));
@@ -154,16 +153,17 @@ var ProductComponent = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     ProductComponent.prototype.render = function () {
+        var product = this.props.product;
         return (React.createElement("div", { className: "product" },
-            React.createElement("img", { src: this.props.product.photos[0] }),
-            "\u041F\u0440\u043E\u0434\u0443\u043A\u0442 ",
-            this.props.product.name,
+            React.createElement("img", { src: product.photos[0] }),
+            React.createElement("p", null,
+                "\u0426\u0435\u043D\u0430 ",
+                product.price,
+                "\u0440."),
+            React.createElement("h1", null, product.name),
             React.createElement("br", null),
-            this.props.product.description,
+            product.description,
             React.createElement("br", null),
-            "\u0426\u0435\u043D\u0430 ",
-            this.props.product.price,
-            "\u0440.",
             React.createElement("div", null,
                 React.createElement("div", null, "asdasd"))));
     };
