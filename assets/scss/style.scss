@@ -9,7 +9,51 @@ body {
     float: left;
     width: 200px;
     margin: 5px;
-    border: 1px solid lightgreen;
+    // border: 1px solid lightgreen;
+    box-sizing: border-box;
+    .sidebar__title {
+        // background-color:rgb(221, 39, 26);
+        background-image: linear-gradient(#ff2d1e, #ed9a4c);
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        box-shadow: 0 2px 5px grey;
+        text-align: center;
+        font: {
+            size: 1.5em;
+        }
+        color: lightcyan;
+    }
+    ul {
+        margin: 0;
+        margin: {
+            left: 2px;
+            right: 2px;;
+        }
+       border-top: none;
+        border: {
+            bottom-left-radius: 5px;
+            bottom-right-radius: 5px;
+        }
+        box-shadow: 0 2px 5px grey;
+        padding: 0;
+        li {
+            border-bottom: 1px solid rgb(212, 212, 212);
+            list-style-type: none;
+            padding: 5px;
+            text-align: center;
+            font: {
+                size: 1.1em;
+            }
+        }
+        li:last-of-type {
+            border-bottom: none;
+        }
+        li:hover {
+            color: red;
+            
+        }
+        
+    }
 }
 .content {
     margin: 5px 5px 5px 210px;

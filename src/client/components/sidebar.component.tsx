@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { CategoriesComponent } from './categories.component';
 
 export interface ISidebarState {
 }
@@ -10,7 +11,8 @@ export class SidebarComponent extends React.Component<ISidebarProps, ISidebarSta
     render() {
         return (
             <div className="sidebar">
-                Боковая панель
+                <div className="sidebar__title">Каталог</div>
+                <CategoriesComponent/>
             </div>
         );
     }

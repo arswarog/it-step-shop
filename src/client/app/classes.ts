@@ -5,3 +5,7 @@ export interface Product {
     price: number;
     photos: string[];
 }
+export interface Category {
+    id: number;
+    name: string;
+}
