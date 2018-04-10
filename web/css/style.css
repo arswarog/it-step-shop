@@ -20,14 +20,18 @@ body {
   width: 100%;
   background: lightgreen; }
 
-.product img {
-  float: left;
-  max-width: 200px;
-  max-height: 200px;
-  padding: 10px; }
-
-.product > div {
-  margin: 5px 5px 5px 210px; }
-
-p {
-  color: red; }
+.product {
+  min-height: 265px; }
+  .product > p {
+    margin-left: 210px; }
+  .product > div {
+    margin: 5px 5px 5px 5px;
+    padding: 10px 10px 0 30px;
+    float: left; }
+    .product > div img {
+      max-width: 200px;
+      max-height: 200px; }
+  .product .price {
+    color: red; }
+  .product .podrobno {
+    display: inline; }

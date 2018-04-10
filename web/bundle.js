@@ -71,7 +71,7 @@ var ContentComponent = /** @class */ (function (_super) {
         ];
         var items = [];
         for (var i = 0; i < products.length; i++) {
-            items.push(React.createElement(product_component_1.ProductComponent, { product: products[i] }));
+            items.push(React.createElement(product_component_1.ProductComponent, { key: i, product: products[i] }));
         }
         return (React.createElement("div", { className: "content" },
             React.createElement("h2", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
@@ -149,21 +149,39 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var ProductComponent = /** @class */ (function (_super) {
     __extends(ProductComponent, _super);
-    function ProductComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function ProductComponent(props, state) {
+        var _this = _super.call(this, props, state) || this;
+        _this.raskritie = _this.raskritie.bind(_this); // Присваивает этой функции эту область видимости
+        return _this;
     }
+    ProductComponent.prototype.raskritie = function () {
+        this.setState({ podrobno: true });
+    };
     ProductComponent.prototype.render = function () {
         var product = this.props.product;
+        var descr = '';
+        var more = null;
+        if (this.state && this.state.podrobno) {
+            descr = product.description;
+        }
+        else {
+            descr = product.description.substring(0, 200);
+            more = React.createElement("span", { className: "podrobno", onClick: this.raskritie }, "\u043F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435...");
+        }
         return (React.createElement("div", { className: "product" },
             React.createElement("br", null),
             React.createElement("big", null, product.name),
             React.createElement("hr", null),
-            React.createElement("img", { src: product.photos[0] }),
-            React.createElement("p", null,
+            React.createElement("div", null,
+                React.createElement("img", { src: product.photos[0] })),
+            React.createElement("p", { className: "price" },
                 "\u0426\u0435\u043D\u0430 ",
                 product.price,
                 "\u0440."),
-            product.description,
+            React.createElement("p", null,
+                descr,
+                " \u00A0",
+                more),
             React.createElement("br", null)));
     };
     return ProductComponent;

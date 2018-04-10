@@ -30,7 +30,7 @@ export class ContentComponent extends React.Component<IContentProps, IContentSta
         let items = [];
 
         for(let i=0; i<products.length; i++) {
-            items.push(<ProductComponent product={products[i]}/>);
+            items.push(<ProductComponent key={i} product={products[i]}/>);
         }
 
         return (

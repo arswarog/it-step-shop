@@ -22,18 +22,26 @@ body {
     background: lightgreen;
 }
 .product {
-    //height: 210px;
+    min-height: 265px;
     //position: relative;
-    img {
-        float: left;
-        max-width: 200px;
-        max-height: 200px;
-        padding: 10px;
+    & > p {
+        margin-left: 210px; 
     }
     & > div {
-        margin: 5px 5px 5px 210px;
+        margin: 5px 5px 5px 5px;
+        padding: 10px 10px 0 30px;
+        float: left;
+        img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    }
+    .price {
+        color: red;
+    }
+    .podrobno {
+        display: inline;
     }
 }
-p {
-    color: red;
-}
+
+
