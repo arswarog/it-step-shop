@@ -38,6 +38,7 @@ export class ProductComponent extends React.Component<IProductProps, IProductSta
                 <p className="price">Цена {product.price }р.</p>
                 
                 <p>{ descr } &nbsp;{more}</p><br/>
+                <button type="button">Купить</button>
                 
 
             </div>

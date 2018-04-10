@@ -182,7 +182,8 @@ var ProductComponent = /** @class */ (function (_super) {
                 descr,
                 " \u00A0",
                 more),
-            React.createElement("br", null)));
+            React.createElement("br", null),
+            React.createElement("button", { type: "button" }, "\u041A\u0443\u043F\u0438\u0442\u044C")));
     };
     return ProductComponent;
 }(React.Component));
