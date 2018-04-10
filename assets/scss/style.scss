@@ -1,6 +1,7 @@
 body {
     margin: 0;
 }
+
 .header {
     width: 100%;
     background: lightgreen;
@@ -21,7 +22,8 @@ body {
     background: lightgreen;
 }
 .product {
-    height: 210px;
+    //height: 210px;
+    //position: relative;
     img {
         float: left;
         max-width: 200px;

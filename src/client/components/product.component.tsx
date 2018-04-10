@@ -13,15 +13,13 @@ export class ProductComponent extends React.Component<IProductProps, IProductSta
         let product = this.props.product;
         return (
             <div className="product">
+                <br />
+                <big>{ product.name }</big><hr/>
 
                 <img src={product.photos[0]} />
                 <p>Цена {product.price }р.</p>
-                <h1>{ product.name }</h1><br/>
-                { product.description }<br/>
                 
-                <div>
-                    <div>asdasd</div>
-                </div>
+                { product.description }<br/>
 
             </div>
         );

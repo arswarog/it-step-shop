@@ -155,17 +155,16 @@ var ProductComponent = /** @class */ (function (_super) {
     ProductComponent.prototype.render = function () {
         var product = this.props.product;
         return (React.createElement("div", { className: "product" },
+            React.createElement("br", null),
+            React.createElement("big", null, product.name),
+            React.createElement("hr", null),
             React.createElement("img", { src: product.photos[0] }),
             React.createElement("p", null,
                 "\u0426\u0435\u043D\u0430 ",
                 product.price,
                 "\u0440."),
-            React.createElement("h1", null, product.name),
-            React.createElement("br", null),
             product.description,
-            React.createElement("br", null),
-            React.createElement("div", null,
-                React.createElement("div", null, "asdasd"))));
+            React.createElement("br", null)));
     };
     return ProductComponent;
 }(React.Component));
