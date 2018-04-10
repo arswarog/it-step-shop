@@ -55,3 +55,7 @@ body {
     max-height: 200px; }
   .product > div {
     margin: 5px 5px 5px 210px; }
+
+.basket {
+  height: 150px;
+  width: 130px; }

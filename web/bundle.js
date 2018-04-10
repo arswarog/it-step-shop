@@ -46,6 +46,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
+<<<<<<< HEAD
 var CategoriesComponent = /** @class */ (function (_super) {
     __extends(CategoriesComponent, _super);
     function CategoriesComponent() {
@@ -83,6 +84,59 @@ var CategoriesComponent = /** @class */ (function (_super) {
     return CategoriesComponent;
 }(React.Component));
 exports.CategoriesComponent = CategoriesComponent;
+=======
+var BasketComponent = /** @class */ (function (_super) {
+    __extends(BasketComponent, _super);
+    function BasketComponent(props, state) {
+        var _this = _super.call(this, props, {
+            count: 0
+        }) || this;
+        _this.alert = _this.alert.bind(_this);
+        return _this;
+        // this.setState({count: 0})
+    }
+    BasketComponent.prototype.alert = function () {
+        var count = this.state.count;
+        alert("Потом вы таки будете перенаправлены на корзину!" + count);
+        this.setState({
+            count: count
+        });
+    };
+    BasketComponent.prototype.render = function () {
+        var products = [
+            {
+                id: 1,
+                name: 'Рабочая станция HP Z640 [Y3Y42EA]',
+                description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
+                price: 163999,
+                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
+            },
+            {
+                id: 3,
+                name: 'Рабочая станция Dell Precision T5810-0231 [5810-0231]',
+                description: 'Dell Precision T5810 [5810-0231] представляет из себя надежный настольный ПК для дома и офиса, может так же использоваться как рабочая станция. Эксклюзивная запатентованная технология Reliable Memory Technology (RMT) компании Dell максимально увеличивает время безотказной работы и производительность. Работая в сочетании с памятью ECC, технология RMT обеспечивает обнаружение и исправление ошибок в реальном времени. Технология RMT сводит ошибки памяти практически к нулю: обращение к дефектной области памяти прекращается, а DIMM может по-прежнему использоваться. Путем простой перезагрузки системы RMT изолирует неисправную область памяти, фактически скрывая ее от ОС. Простота обновления: однократное обновление из любой точки с помощью уникальных расширений Dell Intel vPro для удаленного управления BIOS и удаления данных с жесткого диска,даже если система находится в автономном режиме. Dell Precision Optimizer 2.0 исключает работу вслепую,автоматически настраивая Intel Hyper-Threading, число ядер процессоров, графические ресурсы и питание. Комплектуется видеоадаптером Nvidia Quadro M2000.',
+                price: 149999,
+                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
+            },
+        ];
+        var subStr = "";
+        if (products.length > 0) {
+            var totalSumm_1 = 0;
+            products.forEach(function (element) {
+                subStr += element.name + ", ";
+                totalSumm_1 += element.price;
+            });
+            subStr += products.length + " товаров на сумму " + totalSumm_1;
+        }
+        else {
+            subStr = "пустая корзина";
+        }
+        return (React.createElement("div", { className: "basket", onClick: this.alert }, subStr));
+    };
+    return BasketComponent;
+}(React.Component));
+exports.BasketComponent = BasketComponent;
+>>>>>>> ser2211
 
 },{"react":32}],3:[function(require,module,exports){
 "use strict";
@@ -121,10 +175,19 @@ var ContentComponent = /** @class */ (function (_super) {
                 photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
             },
         ];
+<<<<<<< HEAD
         var items = products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { product: item }); });
         // for(let i in products) {
         //     items.push([<ProductComponent product={products[i]} />]);
         // }
+=======
+        //let product = <ProductComponent product={products[0]} />
+        /*let items = [];
+        products.forEach(element => {
+            items.push(<ProductComponent product={element} />)
+        });*/
+        var items = products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { product: item }); });
+>>>>>>> ser2211
         return (React.createElement("div", { className: "content" },
             React.createElement("h1", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
             items));
@@ -215,8 +278,12 @@ var ProductComponent = /** @class */ (function (_super) {
             "\u0426\u0435\u043D\u0430 ",
             this.props.product.price,
             "\u0440.",
+<<<<<<< HEAD
             React.createElement("div", null,
                 React.createElement("div", null))));
+=======
+            React.createElement("div", null)));
+>>>>>>> ser2211
     };
     return ProductComponent;
 }(React.Component));
@@ -236,22 +303,37 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
+<<<<<<< HEAD
 var categories_component_1 = require("./categories.component");
+=======
+var basket_component_1 = require("./basket.component");
+>>>>>>> ser2211
 var SidebarComponent = /** @class */ (function (_super) {
     __extends(SidebarComponent, _super);
     function SidebarComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     SidebarComponent.prototype.render = function () {
+<<<<<<< HEAD
         return (React.createElement("div", { className: "sidebar" },
             React.createElement("div", { className: "sidebar__title" }, "\u041A\u0430\u0442\u0430\u043B\u043E\u0433"),
             React.createElement(categories_component_1.CategoriesComponent, null)));
+=======
+        //let myBasket = 
+        return (React.createElement("div", { className: "sidebar" },
+            "\u0411\u043E\u043A\u043E\u0432\u0430\u044F \u043F\u0430\u043D\u0435\u043B\u044C",
+            React.createElement(basket_component_1.BasketComponent, null)));
+>>>>>>> ser2211
     };
     return SidebarComponent;
 }(React.Component));
 exports.SidebarComponent = SidebarComponent;
 
+<<<<<<< HEAD
 },{"./categories.component":2,"react":32}],8:[function(require,module,exports){
+=======
+},{"./basket.component":2,"react":32}],8:[function(require,module,exports){
+>>>>>>> ser2211
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");

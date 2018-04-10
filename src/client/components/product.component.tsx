@@ -17,7 +17,6 @@ export class ProductComponent extends React.Component<IProductProps, IProductSta
                 { this.props.product.description }<br/>
                 Цена { this.props.product.price }р.
                 <div>
-                    <div></div>
                 </div>
             </div>
         );
