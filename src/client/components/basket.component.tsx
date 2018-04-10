@@ -30,6 +30,7 @@ export class BasketComponent extends React.Component<IBasketProps, IBasketState>
     render() {
         let products = this.props.basket.products;
         let myList = [];
+        let buttonHide = false;
         if (products.length>0) {
             let totalSumm = 0;
             products.forEach(element => {
@@ -37,14 +38,17 @@ export class BasketComponent extends React.Component<IBasketProps, IBasketState>
                 totalSumm += element.price;
             });
             myList.push(<li key='total'>{products.length} товаров на сумму {totalSumm}</li>);
+            buttonHide = false;
         } else {
             myList.push(<li>пустая корзина</li>);
+            buttonHide = true;
         }
 
         return (
               
             <div className="basket" onClick={this.alert}>
-                {myList} 
+                <ul>{myList}</ul> 
+                <button hidden={buttonHide}>Купить</button>
             </div>
         )
     }

@@ -176,6 +176,7 @@ var BasketComponent = /** @class */ (function (_super) {
     BasketComponent.prototype.render = function () {
         var products = this.props.basket.products;
         var myList = [];
+        var buttonHide = false;
         if (products.length > 0) {
             var totalSumm_1 = 0;
             products.forEach(function (element) {
@@ -186,11 +187,15 @@ var BasketComponent = /** @class */ (function (_super) {
                 products.length,
                 " \u0442\u043E\u0432\u0430\u0440\u043E\u0432 \u043D\u0430 \u0441\u0443\u043C\u043C\u0443 ",
                 totalSumm_1));
+            buttonHide = false;
         }
         else {
             myList.push(React.createElement("li", null, "\u043F\u0443\u0441\u0442\u0430\u044F \u043A\u043E\u0440\u0437\u0438\u043D\u0430"));
+            buttonHide = true;
         }
-        return (React.createElement("div", { className: "basket", onClick: this.alert }, myList));
+        return (React.createElement("div", { className: "basket", onClick: this.alert },
+            React.createElement("ul", null, myList),
+            React.createElement("button", { hidden: buttonHide }, "\u041A\u0443\u043F\u0438\u0442\u044C")));
     };
     return BasketComponent;
 }(React.Component));
