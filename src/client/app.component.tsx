@@ -12,7 +12,7 @@ export class AppComponent extends React.Component<any, any> {
         return (
             <div>
                 <HeaderComponent/>
-                <SidebarComponent/>
+                <SidebarComponent basket={ this.props.basket }/>
                 <ContentComponent products={ this.props.products }/>
                 <FooterComponent/>
             </div>

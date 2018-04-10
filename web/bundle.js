@@ -26,7 +26,7 @@ var AppComponent = /** @class */ (function (_super) {
     AppComponent.prototype.render = function () {
         return (React.createElement("div", null,
             React.createElement(header_component_1.HeaderComponent, null),
-            React.createElement(sidebar_component_1.SidebarComponent, null),
+            React.createElement(sidebar_component_1.SidebarComponent, { basket: this.props.basket }),
             React.createElement(content_component_1.ContentComponent, { products: this.props.products }),
             React.createElement(footer_component_1.FooterComponent, null)));
     };
@@ -39,7 +39,7 @@ function mapStateToProps(state) {
 }
 exports.App = react_redux_1.connect(mapStateToProps, Actions)(AppComponent);
 
-},{"./app/actions":2,"./components/content.component":6,"./components/footer.component":7,"./components/header.component":8,"./components/sidebar.component":10,"react":65,"react-redux":47}],2:[function(require,module,exports){
+},{"./app/actions":2,"./components/content.component":7,"./components/footer.component":8,"./components/header.component":9,"./components/sidebar.component":11,"react":66,"react-redux":48}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var atypes_1 = require("./atypes");
@@ -119,11 +119,31 @@ function loadItems(state, category) {
     return Demo.products;
 }
 function buyItem(basket, item) {
+    if (!basket) {
+        basket = {
+            products: [],
+            count: 0,
+            totalPrice: 0,
+        };
+    }
+    ;
+    basket = __assign({}, basket, { products: basket.products.map(function (item) { return item; }) });
+    var newItem = {
+        id: item.id,
+        count: 1,
+        name: item.name,
+        price: item.price,
+    };
+    basket.products.push(newItem);
+    var totalSumm = 0;
+    basket.products.forEach(function (element) {
+        totalSumm += element.price * element.count;
+    });
+    basket.totalPrice = totalSumm;
     return basket;
 }
 
-<<<<<<< HEAD
-},{"./components/content.component":3,"./components/footer.component":4,"./components/header.component":5,"./components/sidebar.component":7,"react":32}],2:[function(require,module,exports){
+},{"./atypes":3,"./demoData":4}],6:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -145,54 +165,38 @@ var BasketComponent = /** @class */ (function (_super) {
         }) || this;
         _this.alert = _this.alert.bind(_this);
         return _this;
-        // this.setState({count: 0})
     }
     BasketComponent.prototype.alert = function () {
-        var count = this.state.count;
+        var count = this.props.basket.count;
         alert("Потом вы таки будете перенаправлены на корзину!" + count);
         this.setState({
             count: count
         });
     };
     BasketComponent.prototype.render = function () {
-        var products = [
-            {
-                id: 1,
-                name: 'Рабочая станция HP Z640 [Y3Y42EA]',
-                description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
-                price: 163999,
-                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
-            },
-            {
-                id: 3,
-                name: 'Рабочая станция Dell Precision T5810-0231 [5810-0231]',
-                description: 'Dell Precision T5810 [5810-0231] представляет из себя надежный настольный ПК для дома и офиса, может так же использоваться как рабочая станция. Эксклюзивная запатентованная технология Reliable Memory Technology (RMT) компании Dell максимально увеличивает время безотказной работы и производительность. Работая в сочетании с памятью ECC, технология RMT обеспечивает обнаружение и исправление ошибок в реальном времени. Технология RMT сводит ошибки памяти практически к нулю: обращение к дефектной области памяти прекращается, а DIMM может по-прежнему использоваться. Путем простой перезагрузки системы RMT изолирует неисправную область памяти, фактически скрывая ее от ОС. Простота обновления: однократное обновление из любой точки с помощью уникальных расширений Dell Intel vPro для удаленного управления BIOS и удаления данных с жесткого диска,даже если система находится в автономном режиме. Dell Precision Optimizer 2.0 исключает работу вслепую,автоматически настраивая Intel Hyper-Threading, число ядер процессоров, графические ресурсы и питание. Комплектуется видеоадаптером Nvidia Quadro M2000.',
-                price: 149999,
-                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
-            },
-        ];
-        var subStr = "";
+        var products = this.props.basket.products;
+        var myList = [];
         if (products.length > 0) {
             var totalSumm_1 = 0;
             products.forEach(function (element) {
-                subStr += element.name + ", ";
+                myList.push(React.createElement("li", { key: '{element.id}' }, element.name));
                 totalSumm_1 += element.price;
             });
-            subStr += products.length + " товаров на сумму " + totalSumm_1;
+            myList.push(React.createElement("li", { key: 'total' },
+                products.length,
+                " \u0442\u043E\u0432\u0430\u0440\u043E\u0432 \u043D\u0430 \u0441\u0443\u043C\u043C\u0443 ",
+                totalSumm_1));
         }
         else {
-            subStr = "пустая корзина";
+            myList.push(React.createElement("li", null, "\u043F\u0443\u0441\u0442\u0430\u044F \u043A\u043E\u0440\u0437\u0438\u043D\u0430"));
         }
-        return (React.createElement("div", { className: "basket", onClick: this.alert }, subStr));
+        return (React.createElement("div", { className: "basket", onClick: this.alert }, myList));
     };
     return BasketComponent;
 }(React.Component));
 exports.BasketComponent = BasketComponent;
 
-},{"react":32}],3:[function(require,module,exports){
-=======
-},{"./atypes":3,"./demoData":4}],6:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"react":66}],7:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -213,47 +217,15 @@ var ContentComponent = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     ContentComponent.prototype.render = function () {
-<<<<<<< HEAD
-        var products = [
-            {
-                id: 1,
-                name: 'Рабочая станция HP Z640 [Y3Y42EA]',
-                description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
-                price: 163999,
-                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
-            },
-            {
-                id: 3,
-                name: 'Рабочая станция Dell Precision T5810-0231 [5810-0231]',
-                description: 'Dell Precision T5810 [5810-0231] представляет из себя надежный настольный ПК для дома и офиса, может так же использоваться как рабочая станция. Эксклюзивная запатентованная технология Reliable Memory Technology (RMT) компании Dell максимально увеличивает время безотказной работы и производительность. Работая в сочетании с памятью ECC, технология RMT обеспечивает обнаружение и исправление ошибок в реальном времени. Технология RMT сводит ошибки памяти практически к нулю: обращение к дефектной области памяти прекращается, а DIMM может по-прежнему использоваться. Путем простой перезагрузки системы RMT изолирует неисправную область памяти, фактически скрывая ее от ОС. Простота обновления: однократное обновление из любой точки с помощью уникальных расширений Dell Intel vPro для удаленного управления BIOS и удаления данных с жесткого диска,даже если система находится в автономном режиме. Dell Precision Optimizer 2.0 исключает работу вслепую,автоматически настраивая Intel Hyper-Threading, число ядер процессоров, графические ресурсы и питание. Комплектуется видеоадаптером Nvidia Quadro M2000.',
-                price: 149999,
-                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
-            },
-        ];
-        //let product = <ProductComponent product={products[0]} />
-        /*let items = [];
-        products.forEach(element => {
-            items.push(<ProductComponent product={element} />)
-        });*/
-        var items = products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { product: item }); });
-        return (React.createElement("div", { className: "content" },
-            React.createElement("h1", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
-            items));
-=======
         return (React.createElement("div", { className: "content" },
             "\u0422\u043E\u0432\u0430\u0440\u044B",
             this.props.products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { key: item.id, product: item }); })));
->>>>>>> origin/evgeny
     };
     return ContentComponent;
 }(React.Component));
 exports.ContentComponent = ContentComponent;
 
-<<<<<<< HEAD
-},{"./product.component":6,"react":32}],4:[function(require,module,exports){
-=======
-},{"./product.component":9,"react":65}],7:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./product.component":10,"react":66}],8:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -279,11 +251,7 @@ var FooterComponent = /** @class */ (function (_super) {
 }(React.Component));
 exports.FooterComponent = FooterComponent;
 
-<<<<<<< HEAD
-},{"react":32}],5:[function(require,module,exports){
-=======
-},{"react":65}],8:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"react":66}],9:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -309,11 +277,7 @@ var HeaderComponent = /** @class */ (function (_super) {
 }(React.Component));
 exports.HeaderComponent = HeaderComponent;
 
-<<<<<<< HEAD
-},{"react":32}],6:[function(require,module,exports){
-=======
-},{"react":65}],9:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"react":66}],10:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -349,11 +313,7 @@ var ProductComponent = /** @class */ (function (_super) {
 }(React.Component));
 exports.ProductComponent = ProductComponent;
 
-<<<<<<< HEAD
-},{"react":32}],7:[function(require,module,exports){
-=======
-},{"react":65}],10:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"react":66}],11:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -377,17 +337,13 @@ var SidebarComponent = /** @class */ (function (_super) {
         //let myBasket = 
         return (React.createElement("div", { className: "sidebar" },
             "\u0411\u043E\u043A\u043E\u0432\u0430\u044F \u043F\u0430\u043D\u0435\u043B\u044C",
-            React.createElement(basket_component_1.BasketComponent, null)));
+            React.createElement(basket_component_1.BasketComponent, { basket: this.props.basket })));
     };
     return SidebarComponent;
 }(React.Component));
 exports.SidebarComponent = SidebarComponent;
 
-<<<<<<< HEAD
-},{"./basket.component":2,"react":32}],8:[function(require,module,exports){
-=======
-},{"react":65}],11:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./basket.component":6,"react":66}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
@@ -403,14 +359,20 @@ store.dispatch({
     type: atypes_1.ActionTypes.LOAD_ITEMS,
     category: 0,
 });
+store.dispatch({
+    type: atypes_1.ActionTypes.BUY_ITEM,
+    item: {
+        id: 1,
+        name: 'Рабочая станция HP Z640 [Y3Y42EA]',
+        description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
+        price: 163999,
+        photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
+    },
+});
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store },
     React.createElement(app_component_1.App, null)), document.getElementById('app'));
 
-<<<<<<< HEAD
-},{"./app.component":1,"react":32,"react-dom":29}],9:[function(require,module,exports){
-=======
-},{"./app.component":1,"./app/atypes":3,"./app/store":5,"react":65,"react-dom":37,"react-redux":47,"redux":71}],12:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./app.component":1,"./app/atypes":3,"./app/store":5,"react":66,"react-dom":38,"react-redux":48,"redux":72}],13:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -444,11 +406,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-<<<<<<< HEAD
-},{}],10:[function(require,module,exports){
-=======
-},{}],13:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -478,11 +436,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-<<<<<<< HEAD
-},{}],11:[function(require,module,exports){
-=======
-},{}],14:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],15:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -520,11 +474,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-<<<<<<< HEAD
-},{"./camelize":10}],12:[function(require,module,exports){
-=======
-},{"./camelize":13}],15:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./camelize":14}],16:[function(require,module,exports){
 'use strict';
 
 /**
@@ -562,11 +512,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-<<<<<<< HEAD
-},{"./isTextNode":20}],13:[function(require,module,exports){
-=======
-},{"./isTextNode":23}],16:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./isTextNode":24}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -603,11 +549,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-<<<<<<< HEAD
-},{}],14:[function(require,module,exports){
-=======
-},{}],17:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],18:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -627,11 +569,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"_process":24}],15:[function(require,module,exports){
-=======
-},{"_process":29}],18:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"_process":30}],19:[function(require,module,exports){
 'use strict';
 
 /**
@@ -668,11 +606,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-<<<<<<< HEAD
-},{}],16:[function(require,module,exports){
-=======
-},{}],19:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],20:[function(require,module,exports){
 'use strict';
 
 /**
@@ -703,11 +637,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-<<<<<<< HEAD
-},{}],17:[function(require,module,exports){
-=======
-},{}],20:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],21:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -744,11 +674,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-<<<<<<< HEAD
-},{"./hyphenate":16}],18:[function(require,module,exports){
-=======
-},{"./hyphenate":19}],21:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./hyphenate":20}],22:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -804,11 +730,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"_process":24}],19:[function(require,module,exports){
-=======
-},{"_process":29}],22:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"_process":30}],23:[function(require,module,exports){
 'use strict';
 
 /**
@@ -831,11 +753,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-<<<<<<< HEAD
-},{}],20:[function(require,module,exports){
-=======
-},{}],23:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],24:[function(require,module,exports){
 'use strict';
 
 /**
@@ -858,11 +776,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-<<<<<<< HEAD
-},{"./isNode":19}],21:[function(require,module,exports){
-=======
-},{"./isNode":22}],24:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./isNode":23}],25:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -928,11 +842,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-<<<<<<< HEAD
-},{}],22:[function(require,module,exports){
-=======
-},{}],25:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],26:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -997,10 +907,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./emptyFunction":13,"_process":24}],23:[function(require,module,exports){
-=======
-},{"./emptyFunction":16,"_process":29}],26:[function(require,module,exports){
+},{"./emptyFunction":17,"_process":30}],27:[function(require,module,exports){
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -1074,7 +981,7 @@ module.exports = warning;
     };
 })));
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1127,8 +1034,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":29}],28:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"_process":30}],29:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -1220,11 +1126,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-<<<<<<< HEAD
-},{}],24:[function(require,module,exports){
-=======
-},{}],29:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],30:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -1410,11 +1312,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-<<<<<<< HEAD
-},{}],25:[function(require,module,exports){
-=======
-},{}],30:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{}],31:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1477,11 +1375,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"./lib/ReactPropTypesSecret":26,"_process":24,"fbjs/lib/invariant":18,"fbjs/lib/warning":22}],26:[function(require,module,exports){
-=======
-},{"./lib/ReactPropTypesSecret":34,"_process":29,"fbjs/lib/invariant":21,"fbjs/lib/warning":25}],31:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./lib/ReactPropTypesSecret":35,"_process":30,"fbjs/lib/invariant":22,"fbjs/lib/warning":26}],32:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1541,11 +1435,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-<<<<<<< HEAD
-},{}],27:[function(require,module,exports){
-=======
-},{"./lib/ReactPropTypesSecret":34,"fbjs/lib/emptyFunction":16,"fbjs/lib/invariant":21}],32:[function(require,module,exports){
->>>>>>> origin/evgeny
+},{"./lib/ReactPropTypesSecret":35,"fbjs/lib/emptyFunction":17,"fbjs/lib/invariant":22}],33:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2091,7 +1981,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":30,"./lib/ReactPropTypesSecret":34,"_process":29,"fbjs/lib/emptyFunction":16,"fbjs/lib/invariant":21,"fbjs/lib/warning":25,"object-assign":28}],33:[function(require,module,exports){
+},{"./checkPropTypes":31,"./lib/ReactPropTypesSecret":35,"_process":30,"fbjs/lib/emptyFunction":17,"fbjs/lib/invariant":22,"fbjs/lib/warning":26,"object-assign":29}],34:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2123,7 +2013,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":31,"./factoryWithTypeCheckers":32,"_process":29}],34:[function(require,module,exports){
+},{"./factoryWithThrowingShims":32,"./factoryWithTypeCheckers":33,"_process":30}],35:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2137,7 +2027,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.1
  * react-dom.development.js
@@ -18765,7 +18655,7 @@ module.exports = reactDom;
 }
 
 }).call(this,require('_process'))
-},{"_process":29,"fbjs/lib/ExecutionEnvironment":12,"fbjs/lib/camelizeStyleName":14,"fbjs/lib/containsNode":15,"fbjs/lib/emptyFunction":16,"fbjs/lib/emptyObject":17,"fbjs/lib/getActiveElement":18,"fbjs/lib/hyphenateStyleName":20,"fbjs/lib/invariant":21,"fbjs/lib/shallowEqual":24,"fbjs/lib/warning":25,"object-assign":28,"prop-types/checkPropTypes":30,"react":65}],36:[function(require,module,exports){
+},{"_process":30,"fbjs/lib/ExecutionEnvironment":13,"fbjs/lib/camelizeStyleName":15,"fbjs/lib/containsNode":16,"fbjs/lib/emptyFunction":17,"fbjs/lib/emptyObject":18,"fbjs/lib/getActiveElement":19,"fbjs/lib/hyphenateStyleName":21,"fbjs/lib/invariant":22,"fbjs/lib/shallowEqual":25,"fbjs/lib/warning":26,"object-assign":29,"prop-types/checkPropTypes":31,"react":66}],37:[function(require,module,exports){
 /** @license React v16.3.1
  * react-dom.production.min.js
  *
@@ -19012,7 +18902,7 @@ var Gg={createPortal:Fg,findDOMNode:function(a){if(null==a)return null;if(1===a.
 D("40");return a._reactRootContainer?(X.unbatchedUpdates(function(){Eg(null,null,a,!1,function(){a._reactRootContainer=null})}),!0):!1},unstable_createPortal:function(){return Fg.apply(void 0,arguments)},unstable_batchedUpdates:X.batchedUpdates,unstable_deferredUpdates:X.deferredUpdates,flushSync:X.flushSync,unstable_flushControlled:X.flushControlled,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{EventPluginHub:Qa,EventPluginRegistry:xa,EventPropagators:jb,ReactControlledComponent:Zb,ReactDOMComponentTree:Xa,
 ReactDOMEventListener:Zd},unstable_createRoot:function(a,b){return new sg(a,!0,null!=b&&!0===b.hydrate)}};X.injectIntoDevTools({findFiberByHostInstance:Ta,bundleType:0,version:"16.3.1",rendererPackageName:"react-dom"});var Hg=Object.freeze({default:Gg}),Ig=Hg&&Gg||Hg;module.exports=Ig["default"]?Ig["default"]:Ig;
 
-},{"fbjs/lib/ExecutionEnvironment":12,"fbjs/lib/containsNode":15,"fbjs/lib/emptyFunction":16,"fbjs/lib/emptyObject":17,"fbjs/lib/getActiveElement":18,"fbjs/lib/shallowEqual":24,"object-assign":28,"react":65}],37:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":13,"fbjs/lib/containsNode":16,"fbjs/lib/emptyFunction":17,"fbjs/lib/emptyObject":18,"fbjs/lib/getActiveElement":19,"fbjs/lib/shallowEqual":25,"object-assign":29,"react":66}],38:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19054,7 +18944,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":35,"./cjs/react-dom.production.min.js":36,"_process":29}],38:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":36,"./cjs/react-dom.production.min.js":37,"_process":30}],39:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19143,7 +19033,7 @@ function createProvider() {
 
 exports.default = createProvider();
 }).call(this,require('_process'))
-},{"../utils/PropTypes":48,"../utils/warning":52,"_process":29,"prop-types":33,"react":65}],39:[function(require,module,exports){
+},{"../utils/PropTypes":49,"../utils/warning":53,"_process":30,"prop-types":34,"react":66}],40:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19452,7 +19342,7 @@ selectorFactory) {
   };
 }
 }).call(this,require('_process'))
-},{"../utils/PropTypes":48,"../utils/Subscription":49,"_process":29,"hoist-non-react-statics":26,"invariant":27,"react":65}],40:[function(require,module,exports){
+},{"../utils/PropTypes":49,"../utils/Subscription":50,"_process":30,"hoist-non-react-statics":27,"invariant":28,"react":66}],41:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19581,7 +19471,7 @@ function createConnect() {
 }
 
 exports.default = createConnect();
-},{"../components/connectAdvanced":39,"../utils/shallowEqual":50,"./mapDispatchToProps":41,"./mapStateToProps":42,"./mergeProps":43,"./selectorFactory":44}],41:[function(require,module,exports){
+},{"../components/connectAdvanced":40,"../utils/shallowEqual":51,"./mapDispatchToProps":42,"./mapStateToProps":43,"./mergeProps":44,"./selectorFactory":45}],42:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19610,7 +19500,7 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 }
 
 exports.default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
-},{"./wrapMapToProps":46,"redux":71}],42:[function(require,module,exports){
+},{"./wrapMapToProps":47,"redux":72}],43:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19630,7 +19520,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 }
 
 exports.default = [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing];
-},{"./wrapMapToProps":46}],43:[function(require,module,exports){
+},{"./wrapMapToProps":47}],44:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19691,7 +19581,7 @@ function whenMergePropsIsOmitted(mergeProps) {
 
 exports.default = [whenMergePropsIsFunction, whenMergePropsIsOmitted];
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":51,"_process":29}],44:[function(require,module,exports){
+},{"../utils/verifyPlainObject":52,"_process":30}],45:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19807,7 +19697,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   return selectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
 }
 }).call(this,require('_process'))
-},{"./verifySubselectors":45,"_process":29}],45:[function(require,module,exports){
+},{"./verifySubselectors":46,"_process":30}],46:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19834,7 +19724,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
   verify(mapDispatchToProps, 'mapDispatchToProps', displayName);
   verify(mergeProps, 'mergeProps', displayName);
 }
-},{"../utils/warning":52}],46:[function(require,module,exports){
+},{"../utils/warning":53}],47:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19915,7 +19805,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
   };
 }
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":51,"_process":29}],47:[function(require,module,exports){
+},{"../utils/verifyPlainObject":52,"_process":30}],48:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19939,7 +19829,7 @@ exports.Provider = _Provider2.default;
 exports.createProvider = _Provider.createProvider;
 exports.connectAdvanced = _connectAdvanced2.default;
 exports.connect = _connect2.default;
-},{"./components/Provider":38,"./components/connectAdvanced":39,"./connect/connect":40}],48:[function(require,module,exports){
+},{"./components/Provider":39,"./components/connectAdvanced":40,"./connect/connect":41}],49:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19963,7 +19853,7 @@ var storeShape = exports.storeShape = _propTypes2.default.shape({
   dispatch: _propTypes2.default.func.isRequired,
   getState: _propTypes2.default.func.isRequired
 });
-},{"prop-types":33}],49:[function(require,module,exports){
+},{"prop-types":34}],50:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -20060,7 +19950,7 @@ var Subscription = function () {
 }();
 
 exports.default = Subscription;
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -20095,7 +19985,7 @@ function shallowEqual(objA, objB) {
 
   return true;
 }
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -20116,7 +20006,7 @@ function verifyPlainObject(value, displayName, methodName) {
     (0, _warning2.default)(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
 }
-},{"./warning":52,"lodash/isPlainObject":62}],52:[function(require,module,exports){
+},{"./warning":53,"lodash/isPlainObject":63}],53:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -20142,7 +20032,7 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -20150,7 +20040,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-},{"./_root":60}],54:[function(require,module,exports){
+},{"./_root":61}],55:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -20180,7 +20070,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-},{"./_Symbol":53,"./_getRawTag":57,"./_objectToString":58}],55:[function(require,module,exports){
+},{"./_Symbol":54,"./_getRawTag":58,"./_objectToString":59}],56:[function(require,module,exports){
 (function (global){
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -20188,7 +20078,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 module.exports = freeGlobal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 var overArg = require('./_overArg');
 
 /** Built-in value references. */
@@ -20196,7 +20086,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
 
 module.exports = getPrototype;
 
-},{"./_overArg":59}],57:[function(require,module,exports){
+},{"./_overArg":60}],58:[function(require,module,exports){
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -20244,7 +20134,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-},{"./_Symbol":53}],58:[function(require,module,exports){
+},{"./_Symbol":54}],59:[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -20268,7 +20158,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -20285,7 +20175,7 @@ function overArg(func, transform) {
 
 module.exports = overArg;
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -20296,7 +20186,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-},{"./_freeGlobal":55}],61:[function(require,module,exports){
+},{"./_freeGlobal":56}],62:[function(require,module,exports){
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -20327,7 +20217,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     getPrototype = require('./_getPrototype'),
     isObjectLike = require('./isObjectLike');
@@ -20391,7 +20281,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_baseGetTag":54,"./_getPrototype":56,"./isObjectLike":61}],63:[function(require,module,exports){
+},{"./_baseGetTag":55,"./_getPrototype":57,"./isObjectLike":62}],64:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.1
  * react.development.js
@@ -20952,21 +20842,9 @@ function cloneAndReplaceKey(oldElement, newKey) {
   return newElement;
 }
 
-<<<<<<< HEAD
-}).call(this,require('_process'))
-},{"_process":24,"fbjs/lib/ExecutionEnvironment":9,"fbjs/lib/camelizeStyleName":11,"fbjs/lib/containsNode":12,"fbjs/lib/emptyFunction":13,"fbjs/lib/emptyObject":14,"fbjs/lib/getActiveElement":15,"fbjs/lib/hyphenateStyleName":17,"fbjs/lib/invariant":18,"fbjs/lib/shallowEqual":21,"fbjs/lib/warning":22,"object-assign":23,"prop-types/checkPropTypes":25,"react":32}],28:[function(require,module,exports){
-/** @license React v16.3.1
- * react-dom.production.min.js
- *
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
-=======
 /**
  * Clone and return a new ReactElement using element as the starting point.
  * See https://reactjs.org/docs/react-api.html#cloneelement
->>>>>>> origin/evgeny
  */
 function cloneElement(element, config, children) {
   var propName = void 0;
@@ -20974,11 +20852,6 @@ function cloneElement(element, config, children) {
   // Original props are copied
   var props = _assign({}, element.props);
 
-<<<<<<< HEAD
-},{"fbjs/lib/ExecutionEnvironment":9,"fbjs/lib/containsNode":12,"fbjs/lib/emptyFunction":13,"fbjs/lib/emptyObject":14,"fbjs/lib/getActiveElement":15,"fbjs/lib/shallowEqual":21,"object-assign":23,"react":32}],29:[function(require,module,exports){
-(function (process){
-'use strict';
-=======
   // Reserved names are extracted
   var key = element.key;
   var ref = element.ref;
@@ -20988,7 +20861,6 @@ function cloneElement(element, config, children) {
   // transpiler, and the original source is probably a better indicator of the
   // true owner.
   var source = element._source;
->>>>>>> origin/evgeny
 
   // Owner will be preserved, unless ref is overridden
   var owner = element._owner;
@@ -21047,15 +20919,6 @@ function isValidElement(object) {
   return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
 }
 
-<<<<<<< HEAD
-}).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":27,"./cjs/react-dom.production.min.js":28,"_process":24}],30:[function(require,module,exports){
-(function (process){
-/** @license React v16.3.1
- * react.development.js
- *
- * Copyright (c) 2013-present, Facebook, Inc.
-=======
 var ReactDebugCurrentFrame = {};
 
 {
@@ -21076,7 +20939,6 @@ var SUBSEPARATOR = ':';
 
 /**
  * Escape and wrap key so it is safe to use as a reactid
->>>>>>> origin/evgeny
  *
  * @param {string} key to be escaped.
  * @return {string} the escaped key.
@@ -21832,7 +21694,7 @@ module.exports = react;
 }
 
 }).call(this,require('_process'))
-},{"_process":29,"fbjs/lib/emptyFunction":16,"fbjs/lib/emptyObject":17,"fbjs/lib/invariant":21,"fbjs/lib/warning":25,"object-assign":28,"prop-types/checkPropTypes":30}],64:[function(require,module,exports){
+},{"_process":30,"fbjs/lib/emptyFunction":17,"fbjs/lib/emptyObject":18,"fbjs/lib/invariant":22,"fbjs/lib/warning":26,"object-assign":29,"prop-types/checkPropTypes":31}],65:[function(require,module,exports){
 /** @license React v16.3.1
  * react.production.min.js
  *
@@ -21856,7 +21718,7 @@ _calculateChangedBits:b,_defaultValue:a,_currentValue:a,_changedBits:0,Provider:
 c)&&!J.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==k?k[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){k=Array(c);for(var l=0;l<c;l++)k[l]=arguments[l+2];d.children=k}return{$$typeof:r,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=K.bind(null,a);b.type=a;return b},isValidElement:L,version:"16.3.1",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:H,assign:m}},W=Object.freeze({default:V}),X=W&&V||W;
 module.exports=X["default"]?X["default"]:X;
 
-},{"fbjs/lib/emptyFunction":16,"fbjs/lib/emptyObject":17,"object-assign":28}],65:[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":17,"fbjs/lib/emptyObject":18,"object-assign":29}],66:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -21867,7 +21729,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":63,"./cjs/react.production.min.js":64,"_process":29}],66:[function(require,module,exports){
+},{"./cjs/react.development.js":64,"./cjs/react.production.min.js":65,"_process":30}],67:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -21926,7 +21788,7 @@ function applyMiddleware() {
     };
   };
 }
-},{"./compose":69}],67:[function(require,module,exports){
+},{"./compose":70}],68:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -21978,7 +21840,7 @@ function bindActionCreators(actionCreators, dispatch) {
   }
   return boundActionCreators;
 }
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -22124,7 +21986,7 @@ function combineReducers(reducers) {
   };
 }
 }).call(this,require('_process'))
-},{"./createStore":70,"./utils/warning":72,"_process":29,"lodash/isPlainObject":82}],69:[function(require,module,exports){
+},{"./createStore":71,"./utils/warning":73,"_process":30,"lodash/isPlainObject":83}],70:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22161,7 +22023,7 @@ function compose() {
     };
   });
 }
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -22423,7 +22285,7 @@ var ActionTypes = exports.ActionTypes = {
     replaceReducer: replaceReducer
   }, _ref2[_symbolObservable2['default']] = observable, _ref2;
 }
-},{"lodash/isPlainObject":82,"symbol-observable":83}],71:[function(require,module,exports){
+},{"lodash/isPlainObject":83,"symbol-observable":84}],72:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -22472,21 +22334,13 @@ exports.bindActionCreators = _bindActionCreators2['default'];
 exports.applyMiddleware = _applyMiddleware2['default'];
 exports.compose = _compose2['default'];
 }).call(this,require('_process'))
-<<<<<<< HEAD
-},{"_process":24,"fbjs/lib/emptyFunction":13,"fbjs/lib/emptyObject":14,"fbjs/lib/invariant":18,"fbjs/lib/warning":22,"object-assign":23,"prop-types/checkPropTypes":25}],31:[function(require,module,exports){
-/** @license React v16.3.1
- * react.production.min.js
- *
- * Copyright (c) 2013-present, Facebook, Inc.
-=======
-},{"./applyMiddleware":66,"./bindActionCreators":67,"./combineReducers":68,"./compose":69,"./createStore":70,"./utils/warning":72,"_process":29}],72:[function(require,module,exports){
+},{"./applyMiddleware":67,"./bindActionCreators":68,"./combineReducers":69,"./compose":70,"./createStore":71,"./utils/warning":73,"_process":30}],73:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 exports['default'] = warning;
 /**
  * Prints a warning in the console if it exists.
->>>>>>> origin/evgeny
  *
  * @param {String} message The warning message.
  * @returns {void}
@@ -22506,27 +22360,27 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-},{}],73:[function(require,module,exports){
-arguments[4][53][0].apply(exports,arguments)
-},{"./_root":80,"dup":53}],74:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 arguments[4][54][0].apply(exports,arguments)
-},{"./_Symbol":73,"./_getRawTag":77,"./_objectToString":78,"dup":54}],75:[function(require,module,exports){
+},{"./_root":81,"dup":54}],75:[function(require,module,exports){
 arguments[4][55][0].apply(exports,arguments)
-},{"dup":55}],76:[function(require,module,exports){
+},{"./_Symbol":74,"./_getRawTag":78,"./_objectToString":79,"dup":55}],76:[function(require,module,exports){
 arguments[4][56][0].apply(exports,arguments)
-},{"./_overArg":79,"dup":56}],77:[function(require,module,exports){
+},{"dup":56}],77:[function(require,module,exports){
 arguments[4][57][0].apply(exports,arguments)
-},{"./_Symbol":73,"dup":57}],78:[function(require,module,exports){
+},{"./_overArg":80,"dup":57}],78:[function(require,module,exports){
 arguments[4][58][0].apply(exports,arguments)
-},{"dup":58}],79:[function(require,module,exports){
+},{"./_Symbol":74,"dup":58}],79:[function(require,module,exports){
 arguments[4][59][0].apply(exports,arguments)
 },{"dup":59}],80:[function(require,module,exports){
 arguments[4][60][0].apply(exports,arguments)
-},{"./_freeGlobal":75,"dup":60}],81:[function(require,module,exports){
+},{"dup":60}],81:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"dup":61}],82:[function(require,module,exports){
+},{"./_freeGlobal":76,"dup":61}],82:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"./_baseGetTag":74,"./_getPrototype":76,"./isObjectLike":81,"dup":62}],83:[function(require,module,exports){
+},{"dup":62}],83:[function(require,module,exports){
+arguments[4][63][0].apply(exports,arguments)
+},{"./_baseGetTag":75,"./_getPrototype":77,"./isObjectLike":82,"dup":63}],84:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -22534,13 +22388,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-<<<<<<< HEAD
-},{"fbjs/lib/emptyFunction":13,"fbjs/lib/emptyObject":14,"object-assign":23}],32:[function(require,module,exports){
-(function (process){
-'use strict';
-=======
 var _ponyfill = require('./ponyfill.js');
->>>>>>> origin/evgeny
 
 var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -22561,14 +22409,10 @@ if (typeof self !== 'undefined') {
   root = Function('return this')();
 }
 
-<<<<<<< HEAD
-}).call(this,require('_process'))
-},{"./cjs/react.development.js":30,"./cjs/react.production.min.js":31,"_process":24}]},{},[8]);
-=======
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":84}],84:[function(require,module,exports){
+},{"./ponyfill.js":85}],85:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22592,5 +22436,4 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}]},{},[11]);
->>>>>>> origin/evgeny
+},{}]},{},[12]);
