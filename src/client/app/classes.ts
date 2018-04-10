@@ -5,3 +5,16 @@ export interface Product {
     price: number;
     photos: string[];
 }
+
+export interface BasketItem {
+    id: number;
+    count: number;
+    name: string;
+    price: number;
+}
+
+export interface Basket {
+    products: BasketItem[];
+    count: number;
+    totalPrice: number;
+}
