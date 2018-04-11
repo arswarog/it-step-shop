@@ -21,9 +21,11 @@ body {
   background: lightgreen; }
 
 .product {
-  min-height: 265px; }
+  min-height: 265px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif; }
   .product > p {
-    margin-left: 230px; }
+    margin-left: 230px;
+    margin-right: 5px; }
   .product > div {
     margin: 5px 5px 5px 5px;
     float: left;
@@ -31,8 +33,14 @@ body {
     width: 220px; }
     .product > div img {
       max-width: 200px;
-      max-height: 200px; }
+      max-height: 200px;
+      margin: 5px; }
   .product .price {
-    color: red; }
+    color: #FF4500;
+    font-size: 16px; }
   .product .podrobno {
-    display: inline; }
+    display: inline;
+    cursor: pointer; }
+  .product big {
+    padding-left: 3px;
+    color: #2A52BE; }

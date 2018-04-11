@@ -24,8 +24,10 @@ body {
 .product {
     min-height: 265px;
     //position: relative;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     & > p {
         margin-left: 230px; 
+        margin-right: 5px;
     }
     & > div {
         margin: 5px 5px 5px 5px;
@@ -37,14 +39,22 @@ body {
         img {
             max-width: 200px;
             max-height: 200px;
+            margin: 5px;
         }
     }
     .price {
-        color: red;
+        color: #FF4500;
+        font-size: 16px;
     }
     .podrobno {
         display: inline;
+        cursor: pointer;
     }
+    big {
+        padding-left: 3px; 
+        color: #2A52BE;
+    }
+
 }
 
 
