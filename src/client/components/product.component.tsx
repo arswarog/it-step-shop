@@ -15,14 +15,20 @@ export class ProductComponent extends React.Component<IProductProps, IProductSta
         this.raskritie = this.raskritie.bind(this); // Присваивает этой функции эту область видимости
     }
     raskritie() {
-        this.setState({podrobno:true});
+        if (this.state && this.state.podrobno) {
+            this.setState({podrobno:false})
+        } else {
+            this.setState({podrobno:true})
+        }
     }
     render() {
         let product = this.props.product;
         let descr: string = '';
         let more = null;
+        let less = null;
         if (this.state && this.state.podrobno) {
             descr = product.description
+            more = <span className="podrobno" onClick={this.raskritie}>уменьшить...</span>
         } else {
             descr = product.description.substring(0,200);
             more = <span className="podrobno" onClick={this.raskritie}>подробнее...</span> 

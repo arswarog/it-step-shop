@@ -155,14 +155,21 @@ var ProductComponent = /** @class */ (function (_super) {
         return _this;
     }
     ProductComponent.prototype.raskritie = function () {
-        this.setState({ podrobno: true });
+        if (this.state && this.state.podrobno) {
+            this.setState({ podrobno: false });
+        }
+        else {
+            this.setState({ podrobno: true });
+        }
     };
     ProductComponent.prototype.render = function () {
         var product = this.props.product;
         var descr = '';
         var more = null;
+        var less = null;
         if (this.state && this.state.podrobno) {
             descr = product.description;
+            more = React.createElement("span", { className: "podrobno", onClick: this.raskritie }, "\u0443\u043C\u0435\u043D\u044C\u0448\u0438\u0442\u044C...");
         }
         else {
             descr = product.description.substring(0, 200);
