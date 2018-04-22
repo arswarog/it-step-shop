@@ -16,12 +16,12 @@ export var catalog = function (state: ICatalog, action) {
         case 'SET_CATALOG': console.log('SET_CATALOG it works');
                             state = {
                                 ...state,
-                                counter: state.counter+1,
+                                counter: 0,
                                 items: action.items,
                             };
                             console.log('counter ',state.counter);
                             return state;
-        case 'LOW_CATALOG': console.log('LOW_CATALOG it reduces');
+        case 'DEC_CATALOG': console.log('DEC_CATALOG it reduces');
                             state = {
                                 ...state,
                                 counter: state.counter-1,
@@ -29,6 +29,15 @@ export var catalog = function (state: ICatalog, action) {
                             }
                             console.log('counter ',state.counter)
                             return state;
+        case 'INC_CATALOG': console.log('INC_CATALOG it reduces');
+                            state = {
+                                ...state,
+                                counter: state.counter+1,
+                                items: action.items,
+                            }
+                            console.log('counter ',state.counter)
+                            return state;
+        
         default: 
     }
     return state;

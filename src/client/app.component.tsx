@@ -14,6 +14,7 @@ export class AppComponent extends React.Component<any, any> {
                 <HeaderComponent/>
                 <SidebarComponent/>
                    counter: {this.props.counter}
+                   
                 <Content/>
                 <FooterComponent/>
             </div>

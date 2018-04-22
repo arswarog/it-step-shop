@@ -189,7 +189,15 @@ var ContentComponent = /** @class */ (function (_super) {
         //         photos     : ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg'],
         //     },
         // ];
-        var items = this.props.products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { key: item.id, product: item }); });
+        var items = [];
+        if (this.props.products) {
+            if (this.props.products.length > 0) {
+                items = this.props.products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { key: item.id, product: item }); });
+            }
+            ;
+        }
+        else {
+        }
         return (React.createElement("div", { className: "content" },
             React.createElement("h2", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
             items));
@@ -341,6 +349,7 @@ var react_redux_1 = require("react-redux");
 var content_component_1 = require("../components/content.component");
 function mapStateToProps(state) {
     return {
+        counter: state.catalog.counter,
         products: state.catalog.products
     };
 }
@@ -379,11 +388,11 @@ store.dispatch({
     ]
 });
 store.dispatch({
-    type: 'LOW_CATALOG',
+    type: 'INC_CATALOG',
     counter: 2,
     items: [
         {
-            id: 1,
+            id: 2,
             name: 'Рабочая станция HP Z640 [Y3Y42EA]',
             description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
             price: 163999,
@@ -437,12 +446,17 @@ exports.catalog = function (state, action) {
     switch (action.type) {
         case 'SET_CATALOG':
             console.log('SET_CATALOG it works');
-            state = __assign({}, state, { counter: state.counter + 1, items: action.items });
+            state = __assign({}, state, { counter: 0, items: action.items });
             console.log('counter ', state.counter);
             return state;
-        case 'LOW_CATALOG':
-            console.log('LOW_CATALOG it reduces');
+        case 'DEC_CATALOG':
+            console.log('DEC_CATALOG it reduces');
             state = __assign({}, state, { counter: state.counter - 1, items: action.items });
+            console.log('counter ', state.counter);
+            return state;
+        case 'INC_CATALOG':
+            console.log('INC_CATALOG it reduces');
+            state = __assign({}, state, { counter: state.counter + 1, items: action.items });
             console.log('counter ', state.counter);
             return state;
         default:
