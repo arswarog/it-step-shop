@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { combine } from './reducers';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { App } from './containers/app';
 
 const store = createStore( combine );
 store.dispatch( { 
@@ -48,7 +49,7 @@ store.dispatch( {
 
 ReactDOM.render(
     <Provider store = { store }>
-        <AppComponent />
+        <App />
     </Provider>,
     document.getElementById('app'),
 );

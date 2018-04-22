@@ -9,7 +9,34 @@ body {
   float: left;
   width: 200px;
   margin: 5px;
-  border: 1px solid lightgreen; }
+  box-sizing: border-box; }
+  .sidebar .sidebar__title {
+    background-image: linear-gradient(#ff2d1e, #ed9a4c);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: 0 2px 5px grey;
+    text-align: center;
+    font-size: 1.5em;
+    color: lightcyan; }
+  .sidebar ul {
+    margin: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 2px 5px grey;
+    padding: 0; }
+    .sidebar ul li {
+      border-bottom: 1px solid #d4d4d4;
+      list-style-type: none;
+      padding: 5px;
+      text-align: center;
+      font-size: 1.1em; }
+    .sidebar ul li:last-of-type {
+      border-bottom: none; }
+    .sidebar ul li:hover {
+      color: red; }
 
 .content {
   margin: 5px 5px 5px 210px;
@@ -25,11 +52,11 @@ body {
   .product img {
     float: left;
     max-width: 200px;
-    max-height: 200px; }
+    max-height: 200px;
+    padding: 10px; }
   .product > div {
     margin: 5px 5px 5px 210px; }
 
 .basket {
-  width: 130px;
-  margin: 10px;
-  padding: 10px; }
+  height: 150px;
+  width: 130px; }
