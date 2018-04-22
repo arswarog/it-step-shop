@@ -1,12 +1,11 @@
 import * as React from 'react';
+import { CategoriesComponent } from './categories.component';
 import { BasketComponent } from './basket.component';
-import { Basket } from '../app/classes';
 
 export interface ISidebarState {
 }
 
 export interface ISidebarProps {
-    basket: Basket
 }
 
 export class SidebarComponent extends React.Component<ISidebarProps, ISidebarState> {
@@ -15,7 +14,9 @@ export class SidebarComponent extends React.Component<ISidebarProps, ISidebarSta
         return (
             <div className="sidebar">
                 Боковая панель
-                <BasketComponent basket={this.props.basket}/>
+                <BasketComponent />
+                <div className="sidebar__title">Каталог</div>
+                <CategoriesComponent/>
             </div>
         );
     }
