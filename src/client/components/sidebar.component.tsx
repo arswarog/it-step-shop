@@ -11,7 +11,6 @@ export class SidebarComponent extends React.Component<ISidebarProps, ISidebarSta
     render() {
         return (
             <div className="sidebar">
-                <div className="sidebar__title">Каталог</div>
                 <CategoriesComponent/>
             </div>
         );

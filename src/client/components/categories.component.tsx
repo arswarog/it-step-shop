@@ -32,13 +32,12 @@ export class CategoriesComponent extends React.Component<ICategoriesProps, ICate
             }
         ];
        
-        let items = categories.map((item, index)=><li key={index}> {item.name}</li>);
+        let items = categories.map((item, index)=><a href="#" className="list-group-item rounded-0 border-right-0 border-left-0" key={index}>{item.name}</a>);
 
         return (
-            <div className="category">
-                <ul>
-                    {items}
-                </ul>
+            <div className="list-group">
+            <div className="list-group-item rounded-0 border-right-0 border-left-0 border-top-0"><strong>Каталог товаров</strong></div>
+                {items}
             </div>
         );
     }
