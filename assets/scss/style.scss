@@ -1,58 +1,51 @@
 body {
     margin: 0;
+    padding: 0;
+    font-family: 'Open Sans';
+    font-size: 16px;
 }
 .header {
-    width: 100%;
-    background: lightgreen;
+    background: #fff;
+    height: 150px;
+    box-shadow: 0 5px 10px #92a9c0;
+    padding: 20px;
+    display: flex;
+   
+    .header__logo {
+        width: 300px;
+        height: 110px;
+        background-color: #f1f1f1;
+    }
+    .header__search {
+        width: 300px;
+        margin-left: 26px;
+        height: 25px;
+        align-self: flex-end;
+    }
+    .nav {
+        align-self: flex-end;
+        margin: 0;
+        padding: 0;
+    }
+    .header__contact {
+        font-size: 18px;
+        color: #007bff;
+    }
+
 }
 .sidebar {
     float: left;
-    width: 200px;
-    margin: 5px;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: 20px;
     // border: 1px solid lightgreen;
     box-sizing: border-box;
-    .sidebar__title {
-        // background-color:rgb(221, 39, 26);
-        background-image: linear-gradient(#ff2d1e, #ed9a4c);
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        box-shadow: 0 2px 5px grey;
-        text-align: center;
-        font: {
-            size: 1.5em;
-        }
-        color: lightcyan;
+    box-shadow: 0 5px 10px #92a9c0;
+    .list-group-item {
+        height: 51px;
     }
-    ul {
-        margin: 0;
-        margin: {
-            left: 2px;
-            right: 2px;;
-        }
-       border-top: none;
-        border: {
-            bottom-left-radius: 5px;
-            bottom-right-radius: 5px;
-        }
-        box-shadow: 0 2px 5px grey;
-        padding: 0;
-        li {
-            border-bottom: 1px solid rgb(212, 212, 212);
-            list-style-type: none;
-            padding: 5px;
-            text-align: center;
-            font: {
-                size: 1.1em;
-            }
-        }
-        li:last-of-type {
-            border-bottom: none;
-        }
-        li:hover {
-            color: red;
-            
-        }
-        
+    a:last-of-type {
+        border-bottom: none;
     }
 }
 .content {

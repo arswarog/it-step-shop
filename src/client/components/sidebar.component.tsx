@@ -14,7 +14,7 @@ export class SidebarComponent extends React.Component<ISidebarProps, ISidebarSta
         return (
             <div className="sidebar">
                 Боковая панель
-                <BasketComponent />
+                <BasketComponent/>
                 <div className="sidebar__title">Каталог</div>
                 <CategoriesComponent/>
             </div>

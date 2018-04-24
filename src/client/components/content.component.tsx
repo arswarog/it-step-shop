@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ProductComponent } from './product.component';
 import { Product } from '../app/classes';
-import { loadItems } from '../app/actions';
 
 export interface IContentState {
 }
@@ -21,7 +20,6 @@ export class ContentComponent extends React.Component<IContentProps, IContentSta
         return (
             <div className="content">
                 <h2>Товары</h2>
-
                 { items }
             </div>
         );

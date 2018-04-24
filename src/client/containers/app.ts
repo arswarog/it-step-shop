@@ -8,6 +8,6 @@ function mapStateToProps(state) {
 }
 
 export var App = connect(
-    mapStateToProps,
+    mapStateToProps, //ф-ция, добавляет новую информация в props
     //mapDispatchToProps
 )(AppComponent);
