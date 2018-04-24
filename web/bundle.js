@@ -30,8 +30,6 @@ var AppComponent = /** @class */ (function (_super) {
             "\"",
             React.createElement("button", null, "counter+1"),
             React.createElement("button", null, "counter-1"),
-            React.createElement(header_component_1.HeaderComponent, null),
-            React.createElement(sidebar_component_1.SidebarComponent, null),
             React.createElement(content_1.Content, null),
             React.createElement(footer_component_1.FooterComponent, null)));
     };
@@ -259,22 +257,48 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var ProductComponent = /** @class */ (function (_super) {
     __extends(ProductComponent, _super);
-    function ProductComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function ProductComponent(props, state) {
+        var _this = _super.call(this, props, state) || this;
+        _this.raskritie = _this.raskritie.bind(_this); // Присваивает этой функции эту область видимости
+        return _this;
     }
+    ProductComponent.prototype.raskritie = function () {
+        if (this.state && this.state.podrobno) {
+            this.setState({ podrobno: false });
+        }
+        else {
+            this.setState({ podrobno: true });
+        }
+    };
     ProductComponent.prototype.render = function () {
         var product = this.props.product;
+        var descr = '';
+        var more = null;
+        var less = null;
+        if (this.state && this.state.podrobno) {
+            descr = product.description;
+            more = React.createElement("span", { className: "podrobno", onClick: this.raskritie }, "\u0443\u043C\u0435\u043D\u044C\u0448\u0438\u0442\u044C...");
+        }
+        else {
+            descr = product.description.substring(0, 200);
+            more = React.createElement("span", { className: "podrobno", onClick: this.raskritie }, "\u043F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435...");
+        }
         return (React.createElement("div", { className: "product" },
-            React.createElement("img", { src: product.photos[0] }),
-            React.createElement("p", null,
+            React.createElement("br", null),
+            React.createElement("h3", null, product.name),
+            React.createElement("hr", null),
+            React.createElement("div", null,
+                React.createElement("img", { src: product.photos[0] })),
+            React.createElement("p", { className: "price" },
                 "\u0426\u0435\u043D\u0430 ",
                 product.price,
                 "\u0440."),
-            React.createElement("h1", null, product.name),
+            React.createElement("p", null,
+                descr,
+                " \u00A0",
+                more),
             React.createElement("br", null),
-            product.description,
-            React.createElement("br", null),
-            React.createElement("div", null)));
+            React.createElement("button", { type: "button" }, "\u041A\u0443\u043F\u0438\u0442\u044C")));
     };
     return ProductComponent;
 }(React.Component));
@@ -331,6 +355,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = require("react-redux");
 var content_component_1 = require("../components/content.component");
 function mapStateToProps(state) {
+    console.log(state);
     return {
         counter: state.catalog.counter,
         products: state.catalog.products,
@@ -394,14 +419,14 @@ var store = redux_1.createStore(reducers_1.combine);
 store.dispatch({
     type: 'SET_CATALOG',
     counter: 0,
-    items: demoData_1.demoProducts,
+    products: demoData_1.demoProducts,
 });
 store.dispatch({
     type: 'INC_CATALOG',
 });
 store.dispatch({
     type: 'SET_BASKET',
-    items: [],
+    products: [],
 });
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store },
     React.createElement(app_1.App, null)), document.getElementById('app'));
@@ -436,7 +461,7 @@ exports.catalog = function (state, action) {
     console.log('state', state, 'action', action);
     if (!state) {
         state = {
-            items: [],
+            products: [],
             categories: [],
             counter: 0,
         };
@@ -444,17 +469,17 @@ exports.catalog = function (state, action) {
     switch (action.type) {
         case 'SET_CATALOG':
             console.log('SET_CATALOG it works');
-            state = __assign({}, state, { counter: 0, items: action.items });
+            state = __assign({}, state, { counter: 0, products: action.products });
             console.log('counter ', state.counter);
             return state;
         case 'DEC_CATALOG':
             console.log('DEC_CATALOG it reduces');
-            state = __assign({}, state, { counter: state.counter - 1, items: action.items });
+            state = __assign({}, state, { counter: state.counter - 1 });
             console.log('counter ', state.counter);
             return state;
         case 'INC_CATALOG':
             console.log('INC_CATALOG it reduces');
-            state = __assign({}, state, { counter: state.counter + 1, items: action.items });
+            state = __assign({}, state, { counter: state.counter + 1 });
             console.log('counter ', state.counter);
             return state;
         default:

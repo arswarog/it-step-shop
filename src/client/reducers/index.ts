@@ -1,6 +1,11 @@
 import { combineReducers } from 'redux';
-import { catalog } from './catalog';
-import { basket } from './basket';
+import { catalog, ICatalog } from './catalog';
+import { basket, IBasket } from './basket';
+
+export interface ICombineState {
+    catalog: ICatalog,
+    basket: IBasket,
+}
 
 export var combine = combineReducers(
     {

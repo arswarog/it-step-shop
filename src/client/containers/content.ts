@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import { ContentComponent } from '../components/content.component';
+import { ICombineState } from '../reducers';
 
-function mapStateToProps(state) {
+function mapStateToProps(state: ICombineState) {
+    console.log(state);
     return {
         counter : state.catalog.counter,
         products: state.catalog.products,

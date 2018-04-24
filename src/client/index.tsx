@@ -9,9 +9,9 @@ import { demoProducts } from './demoData';
 const store = createStore(combine);
 
 store.dispatch({
-    type   : 'SET_CATALOG',
-    counter: 0,
-    items  : demoProducts,
+    type    : 'SET_CATALOG',
+    counter : 0,
+    products: demoProducts,
 });
 
 store.dispatch({

@@ -14,8 +14,6 @@ export class AppComponent extends React.Component<any, any> {
                 counter: "{ this.props.counter }"
                 <button>counter+1</button>
                 <button>counter-1</button>
-                <HeaderComponent/>
-                <SidebarComponent/>
                 <Content/>
                 <FooterComponent/>
             </div>

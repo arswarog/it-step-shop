@@ -4,6 +4,7 @@ body {
     font-family: 'Open Sans';
     font-size: 16px;
 }
+
 .header {
     background: #fff;
     height: 150px;
@@ -58,17 +59,41 @@ body {
     background: lightgreen;
 }
 .product {
-    height: 210px;
-    img {
-        float: left;
-        max-width: 200px;
-        max-height: 200px;
-        padding: 10px;
+    min-height: 265px;
+    //position: relative;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    & > p {
+        margin-left: 230px; 
+        margin-right: 5px;
     }
     & > div {
-        margin: 5px 5px 5px 210px;
+        margin: 5px 5px 5px 5px;
+        //padding: 10px 10px 0 30px;
+        float: left;
+        //align-content: center;
+        text-align: center;
+        width: 220px;
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 5px;
+        }
     }
+    .price {
+        color: #FF4500;
+        font-size: 16px;
+    }
+    .podrobno {
+        display: inline;
+        cursor: pointer;
+    }
+    big {
+        padding-left: 3px; 
+        color: #2A52BE;
+    }
+
 }
+
 .basket {
     height: 150px;
     width: 130px;

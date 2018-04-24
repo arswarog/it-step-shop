@@ -1,7 +1,7 @@
 import { Product, Category } from '../app/classes';
 
 export interface ICatalog {
-    items: Product[];
+    products: Product[];
     categories: Category[];
     counter: number;
 }
@@ -10,7 +10,7 @@ export var catalog = function(state: ICatalog, action) {
     console.log('state', state, 'action', action);
     if (!state) {
         state = {
-            items     : [],
+            products     : [],
             categories: [],
             counter   : 0,
         };
@@ -21,7 +21,7 @@ export var catalog = function(state: ICatalog, action) {
             state = {
                 ...state,
                 counter: 0,
-                items  : action.items,
+                products  : action.products,
             };
             console.log('counter ', state.counter);
             return state;
@@ -30,7 +30,6 @@ export var catalog = function(state: ICatalog, action) {
             state = {
                 ...state,
                 counter: state.counter - 1,
-                items  : action.items,
             };
             console.log('counter ', state.counter);
             return state;
@@ -39,7 +38,6 @@ export var catalog = function(state: ICatalog, action) {
             state = {
                 ...state,
                 counter: state.counter + 1,
-                items  : action.items,
             };
             console.log('counter ', state.counter);
             return state;
