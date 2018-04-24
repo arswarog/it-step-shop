@@ -20,7 +20,9 @@ export class ContentComponent extends React.Component<IContentProps, IContentSta
         return (
             <div className="content">
                 <h2>Товары</h2>
-                { items }
+                <div className="row">
+                    { items }
+                </div>
             </div>
         );
     }

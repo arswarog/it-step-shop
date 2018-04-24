@@ -34,19 +34,24 @@ export class ProductComponent extends React.Component<IProductProps, IProductSta
             more  = <span className="podrobno" onClick={ this.raskritie }>подробнее...</span>;
         }
         return (
-            <div className="product">
-                <br/>
-                <h3>{ product.name }</h3>
-                <hr/>
-
-                <div>
-                    <img src={ product.photos[0] }/>
+            <div className="product col-lg-4 col-md-6 mb-4">
+                <div className="card h-100">
+                    <a href="#">
+                        <img className="card-img-top" src={ product.photos[0] } alt=""/>
+                    </a>
+                    <div className="card-body">
+                        <h4 className="card-title">
+                            <a href="#">{ product.name }</a>
+                        </h4>
+                        <h5>Цена: { product.price }&#8381;</h5>
+                        <p className="card-text">
+                            { descr } &nbsp;{ more }
+                        </p>
+                    </div>
+                    <div className="card-footer">
+                        <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                    </div>
                 </div>
-                <p className="price">Цена { product.price }р.</p>
-
-                <p>{ descr } &nbsp;{ more }</p><br/>
-                <button type="button">Купить</button>
-            </div>
-        );
+            </div>);
     }
 }
