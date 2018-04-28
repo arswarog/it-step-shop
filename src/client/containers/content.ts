@@ -1,6 +1,8 @@
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ContentComponent } from '../components/content.component';
 import { ICombineState } from '../reducers';
+import { buyItem } from '../actions';
 
 function mapStateToProps(state: ICombineState) {
     console.log(state);
@@ -10,7 +12,13 @@ function mapStateToProps(state: ICombineState) {
     };
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        buyItem,
+    }, dispatch);
+}
+
 export var Content = connect(
     mapStateToProps, //ф-ция, добавляет новую информация в props
-    // mapDispatchToProps
+    mapDispatchToProps,
 )(ContentComponent);

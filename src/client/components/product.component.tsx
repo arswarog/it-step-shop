@@ -7,6 +7,7 @@ export interface IProductState {
 
 export interface IProductProps {
     product: Product
+    buyItem: (item: Product) => any,
 }
 
 export class ProductComponent extends React.Component<IProductProps, IProductState> {
@@ -45,7 +46,7 @@ export class ProductComponent extends React.Component<IProductProps, IProductSta
                 <p className="price">Цена { product.price }р.</p>
 
                 <p>{ descr } &nbsp;{ more }</p><br/>
-                <button type="button">Купить</button>
+                <button type="button" onClick={ () => this.props.buyItem(product) }>Купить</button>
             </div>
         );
     }
