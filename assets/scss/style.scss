@@ -5,11 +5,12 @@ body {
     font-size: 16px;
 }
 .header {
-    background: #fff;
+    background: rgb(255, 255, 255);
     height: 150px;
     box-shadow: 0 5px 10px #92a9c0;
     padding: 20px;
-    display: flex;
+    display: flex; 
+    // justify-content: space-between;
    
     .header__logo {
         width: 300px;
@@ -21,15 +22,32 @@ body {
         margin-left: 26px;
         height: 25px;
         align-self: flex-end;
+        .btn {
+            padding: 0 6px;
+            display: flex;
+        }
+    }
+    .header__menu {
+        align-self: flex-end;
+        margin-left: 48px;
     }
     .nav {
-        align-self: flex-end;
-        margin: 0;
-        padding: 0;
+        // background-color: green;
+        height: 25px;
+         .nav-link {
+             padding: 0 5px;
+        }
+        
+    }
+    .header__right-box {
+    }
+    .header__login {  
+        // background-color: rgb(163, 226, 150);
     }
     .header__contact {
         font-size: 18px;
         color: #007bff;
+        // background-color: rgb(255, 255, 255);
     }
 
 }

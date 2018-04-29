@@ -25,9 +25,9 @@ store.dispatch({
     items: [
         {
             id: 1,
-            name: 'string',
+            name: 'stringwww',
             description: 'string',
-            price: 1,
+            price: 1222,
             photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
         }
     ]

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CategoriesComponent } from './categories.component';
+import { Categories } from '../containers/categories';
 
 export interface ISidebarState {
 }
@@ -11,7 +11,7 @@ export class SidebarComponent extends React.Component<ISidebarProps, ISidebarSta
     render() {
         return (
             <div className="sidebar">
-                <CategoriesComponent/>
+                <Categories/>
             </div>
         );
     }

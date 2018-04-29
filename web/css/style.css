@@ -5,7 +5,7 @@ body {
   font-size: 16px; }
 
 .header {
-  background: #fff;
+  background: white;
   height: 150px;
   box-shadow: 0 5px 10px #92a9c0;
   padding: 20px;
@@ -19,10 +19,16 @@ body {
     margin-left: 26px;
     height: 25px;
     align-self: flex-end; }
-  .header .nav {
+    .header .header__search .btn {
+      padding: 0 6px;
+      display: flex; }
+  .header .header__menu {
     align-self: flex-end;
-    margin: 0;
-    padding: 0; }
+    margin-left: 48px; }
+  .header .nav {
+    height: 25px; }
+    .header .nav .nav-link {
+      padding: 0 5px; }
   .header .header__contact {
     font-size: 18px;
     color: #007bff; }

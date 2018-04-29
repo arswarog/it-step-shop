@@ -5,34 +5,35 @@ export interface ICategoriesState {
 }
 
 export interface ICategoriesProps {
+    categories: Category[],
 }
 
 export class CategoriesComponent extends React.Component<ICategoriesProps, ICategoriesState> {
     render() {
-        let categories: Category[]=[
-            {
-                id: 1,
-                name: 'Категория 1'
-            },
-            {
-                id: 2,
-                name: 'Категория 2'
-            },
-            {
-                id: 3,
-                name: 'Категория 3'
-            },
-            {
-                id: 4,
-                name: 'Категория 4'
-            },
-            {
-                id: 5,
-                name: 'Категория 5'
-            }
-        ];
+        // let categories: Category[]=[
+        //     {
+        //         id: 1,
+        //         name: 'Категория 1'
+        //     },
+        //     {
+        //         id: 2,
+        //         name: 'Категория 2'
+        //     },
+        //     {
+        //         id: 3,
+        //         name: 'Категория 3'
+        //     },
+        //     {
+        //         id: 4,
+        //         name: 'Категория 4'
+        //     },
+        //     {
+        //         id: 5,
+        //         name: 'Категория 5'
+        //     }
+        // ];
        
-        let items = categories.map((item, index)=><a href="#" className="list-group-item rounded-0 border-right-0 border-left-0" key={index}>{item.name}</a>);
+        let items = this.props.categories.map((item, index)=><a href="#" className="list-group-item rounded-0 border-right-0 border-left-0" key={index}>{item.name}</a>);
 
         return (
             <div className="list-group">
