@@ -6,10 +6,10 @@ export interface IProductState {
 }
 
 export interface IProductProps {
-    product: Product
+    product: Product, 
 }
 
-export class ProductComponent extends React.Component<IProductProps, IProductState> {
+export class ProductComponent extends React.Component<any, IProductState> {
     constructor(props, state) {
         super(props, state);
         this.raskritie = this.raskritie.bind(this); // Присваивает этой функции эту область видимости
@@ -45,7 +45,7 @@ export class ProductComponent extends React.Component<IProductProps, IProductSta
                 <p className="price">Цена { product.price }р.</p>
 
                 <p>{ descr } &nbsp;{ more }</p><br/>
-                <button type="button">Купить</button>
+                <button type="button" onClick={()=>this.props.f(this.props.product)}>Купить</button>
             </div>
         );
     }

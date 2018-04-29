@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { AppComponent } from '../components/app.component';
+import { ProductComponent } from '../components/product.component';
+import { ICombineState } from '../reducers';
 import { bindActionCreators } from 'redux';
-import { buyItem } from '../actions';
-import { addCounter } from '../actions/catalog';
+import { buyItem, addCounter } from '../actions';
 
-function mapStateToProps(state) {
+function mapStateToProps(state: ICombineState) {
     return {
-        counter: state.catalog.counter,
+        product: state.catalog.products,
     };
 }
 
@@ -14,7 +14,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({f: buyItem, z: addCounter },dispatch)
 }
 
-export var App = connect(
+
+export var Product = connect(
     mapStateToProps, //ф-ция, добавляет новую информация в props
     mapDispatchToProps
-)(AppComponent);
+)(ProductComponent);
