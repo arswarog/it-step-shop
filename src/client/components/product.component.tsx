@@ -2,23 +2,51 @@ import * as React from 'react';
 import { Product } from '../app/classes';
 
 export interface IProductState {
+    podrobno: boolean
 }
 
 export interface IProductProps {
     product: Product
+    buyItem: (item: Product) => any,
 }
 
 export class ProductComponent extends React.Component<IProductProps, IProductState> {
+    constructor(props, state) {
+        super(props, state);
+        this.raskritie = this.raskritie.bind(this); // Присваивает этой функции эту область видимости
+    }
+    raskritie() {
+        if (this.state && this.state.podrobno) {
+            this.setState({ podrobno: false });
+        } else {
+            this.setState({ podrobno: true });
+        }
+    }
     render() {
+        let product       = this.props.product;
+        let descr: string = '';
+        let more          = null;
+        let less          = null;
+        if (this.state && this.state.podrobno) {
+            descr = product.description;
+            more  = <span className="podrobno" onClick={ this.raskritie }>уменьшить...</span>;
+        } else {
+            descr = product.description.substring(0, 200);
+            more  = <span className="podrobno" onClick={ this.raskritie }>подробнее...</span>;
+        }
         return (
             <div className="product">
-                <img src={this.props.product.photos[0]} />
-                Продукт { this.props.product.name }<br/>
-                { this.props.product.description }<br/>
-                Цена { this.props.product.price }р.
+                <br/>
+                <h3>{ product.name }</h3>
+                <hr/>
+
                 <div>
-                    <div></div>
+                    <img src={ product.photos[0] }/>
                 </div>
+                <p className="price">Цена { product.price }р.</p>
+
+                <p>{ descr } &nbsp;{ more }</p><br/>
+                <button type="button" onClick={ () => this.props.buyItem(product) }>Купить</button>
             </div>
         );
     }

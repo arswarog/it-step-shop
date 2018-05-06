@@ -1,38 +1,49 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var header_component_1 = require("../components/header.component");
-var sidebar_component_1 = require("../components/sidebar.component");
-var footer_component_1 = require("../components/footer.component");
-var content_1 = require("../containers/content");
-var AppComponent = /** @class */ (function (_super) {
-    __extends(AppComponent, _super);
-    function AppComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    AppComponent.prototype.render = function () {
-        return (React.createElement("div", null,
-            React.createElement(header_component_1.HeaderComponent, null),
-            React.createElement(sidebar_component_1.SidebarComponent, null),
-            React.createElement(content_1.Content, null),
-            React.createElement(footer_component_1.FooterComponent, null)));
-    };
-    return AppComponent;
-}(React.Component));
-exports.AppComponent = AppComponent;
+var ActionTypes;
+(function (ActionTypes) {
+    ActionTypes["SET_STATE"] = "SET_STATE";
+    ActionTypes["BUY_ITEM"] = "BUY_ITEM";
+    ActionTypes["LOAD_ITEMS"] = "LOAD_ITEMS";
+})(ActionTypes = exports.ActionTypes || (exports.ActionTypes = {}));
 
-},{"../components/footer.component":4,"../components/header.component":5,"../components/sidebar.component":7,"../containers/content":10,"react":67}],2:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _actions_1 = require("./_actions");
+function buyItem(item) {
+    alert("\u041A\u0443\u043F\u0438\u0442\u044C " + item.name);
+    return {
+        type: _actions_1.ActionTypes.BUY_ITEM,
+        item: item,
+    };
+}
+exports.buyItem = buyItem;
+
+},{"./_actions":1}],3:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function selectCategory(catid) {
+    return {
+        type: 'SELECT_CATALOG',
+        categoryId: catid,
+    };
+}
+exports.selectCategory = selectCategory;
+4;
+
+},{}],4:[function(require,module,exports){
+"use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(require("./_actions"));
+__export(require("./basket"));
+//export * from './catalog';
+
+},{"./_actions":1,"./basket":2}],5:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -46,35 +57,123 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
+var content_1 = require("../containers/content");
+var header_component_1 = require("./header.component");
+var sidebar_component_1 = require("./sidebar.component");
+var footer_component_1 = require("./footer.component");
+var AppComponent = /** @class */ (function (_super) {
+    __extends(AppComponent, _super);
+    function AppComponent() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AppComponent.prototype.render = function () {
+        return (React.createElement("div", null,
+            React.createElement(header_component_1.HeaderComponent, null),
+            React.createElement(sidebar_component_1.SidebarComponent, { selectCategory: this.props.selectCategory }),
+            "counter: \"",
+            this.props.counter,
+            "\"",
+            React.createElement(content_1.Content, null),
+            React.createElement(footer_component_1.FooterComponent, null)));
+    };
+    return AppComponent;
+}(React.Component));
+exports.AppComponent = AppComponent;
+
+},{"../containers/content":14,"./footer.component":9,"./header.component":10,"./sidebar.component":12,"react":73}],6:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = require("react");
+var BasketComponent = /** @class */ (function (_super) {
+    __extends(BasketComponent, _super);
+    function BasketComponent(props, state) {
+        var _this = _super.call(this, props, {
+            count: 0
+        }) || this;
+        _this.alert = _this.alert.bind(_this);
+        return _this;
+        // this.setState({count: 0})
+    }
+    BasketComponent.prototype.alert = function () {
+        var count = this.state.count;
+        alert("Потом вы таки будете перенаправлены на корзину!" + count);
+        this.setState({
+            count: count
+        });
+    };
+    BasketComponent.prototype.render = function () {
+        var products = [
+            {
+                id: 1,
+                name: 'Рабочая станция HP Z640 [Y3Y42EA]',
+                description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
+                price: 163999,
+                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg'],
+                catId: 1,
+            },
+            {
+                id: 3,
+                name: 'Рабочая станция Dell Precision T5810-0231 [5810-0231]',
+                description: 'Dell Precision T5810 [5810-0231] представляет из себя надежный настольный ПК для дома и офиса, может так же использоваться как рабочая станция. Эксклюзивная запатентованная технология Reliable Memory Technology (RMT) компании Dell максимально увеличивает время безотказной работы и производительность. Работая в сочетании с памятью ECC, технология RMT обеспечивает обнаружение и исправление ошибок в реальном времени. Технология RMT сводит ошибки памяти практически к нулю: обращение к дефектной области памяти прекращается, а DIMM может по-прежнему использоваться. Путем простой перезагрузки системы RMT изолирует неисправную область памяти, фактически скрывая ее от ОС. Простота обновления: однократное обновление из любой точки с помощью уникальных расширений Dell Intel vPro для удаленного управления BIOS и удаления данных с жесткого диска,даже если система находится в автономном режиме. Dell Precision Optimizer 2.0 исключает работу вслепую,автоматически настраивая Intel Hyper-Threading, число ядер процессоров, графические ресурсы и питание. Комплектуется видеоадаптером Nvidia Quadro M2000.',
+                price: 149999,
+                photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg'],
+                catId: 2,
+            },
+        ];
+        var subStr = "";
+        if (products.length > 0) {
+            var totalSumm_1 = 0;
+            products.forEach(function (element) {
+                subStr += element.name + ", ";
+                totalSumm_1 += element.price;
+            });
+            subStr += products.length + " товаров на сумму " + totalSumm_1;
+        }
+        else {
+            subStr = "пустая корзина";
+        }
+        return (React.createElement("div", { className: "basket", onClick: this.alert }, subStr));
+    };
+    return BasketComponent;
+}(React.Component));
+exports.BasketComponent = BasketComponent;
+
+},{"react":73}],7:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = require("react");
+var demoData_1 = require("../demoData");
 var CategoriesComponent = /** @class */ (function (_super) {
     __extends(CategoriesComponent, _super);
     function CategoriesComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     CategoriesComponent.prototype.render = function () {
-        // let categories: Category[]=[
-        //     {
-        //         id: 1,
-        //         name: 'Категория 1'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Категория 2'
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Категория 3'
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Категория 4'
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Категория 5'
-        //     }
-        // ];
-        var items = this.props.categories.map(function (item, index) { return React.createElement("a", { href: "#", className: "list-group-item rounded-0 border-right-0 border-left-0", key: index }, item.name); });
+        var _this = this;
+        var categories = demoData_1.demoCategories;
+        var items = categories.map(function (item, index) {
+            return React.createElement("a", { onClick: function () { return _this.props.selectCategory(item.id); }, href: "#", className: "list-group-item rounded-0 border-right-0 border-left-0", key: index }, item.name);
+        });
         return (React.createElement("div", { className: "list-group" },
             React.createElement("div", { className: "list-group-item rounded-0 border-right-0 border-left-0 border-top-0" },
                 React.createElement("strong", null, "\u041A\u0430\u0442\u0430\u043B\u043E\u0433 \u0442\u043E\u0432\u0430\u0440\u043E\u0432")),
@@ -84,7 +183,7 @@ var CategoriesComponent = /** @class */ (function (_super) {
 }(React.Component));
 exports.CategoriesComponent = CategoriesComponent;
 
-},{"react":67}],3:[function(require,module,exports){
+},{"../demoData":15,"react":73}],8:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -105,35 +204,21 @@ var ContentComponent = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     ContentComponent.prototype.render = function () {
-        // let products: Product[] = [
-        //     {
-        //         id: 1,
-        //         name: 'Рабочая станция HP Z640 [Y3Y42EA]',
-        //         description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
-        //         price: 163999,
-        //         photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Рабочая станция Dell Precision T5810-0231 [5810-0231]',
-        //         description: 'Dell Precision T5810 [5810-0231] представляет из себя надежный настольный ПК для дома и офиса, может так же использоваться как рабочая станция. Эксклюзивная запатентованная технология Reliable Memory Technology (RMT) компании Dell максимально увеличивает время безотказной работы и производительность. Работая в сочетании с памятью ECC, технология RMT обеспечивает обнаружение и исправление ошибок в реальном времени. Технология RMT сводит ошибки памяти практически к нулю: обращение к дефектной области памяти прекращается, а DIMM может по-прежнему использоваться. Путем простой перезагрузки системы RMT изолирует неисправную область памяти, фактически скрывая ее от ОС. Простота обновления: однократное обновление из любой точки с помощью уникальных расширений Dell Intel vPro для удаленного управления BIOS и удаления данных с жесткого диска,даже если система находится в автономном режиме. Dell Precision Optimizer 2.0 исключает работу вслепую,автоматически настраивая Intel Hyper-Threading, число ядер процессоров, графические ресурсы и питание. Комплектуется видеоадаптером Nvidia Quadro M2000.',
-        //         price: 149999,
-        //         photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg']
-        //     },
-        // ];
-        var items = this.props.products.map(function (item) { return React.createElement(product_component_1.ProductComponent, { product: item, key: item.id }); });
-        // for(let i in products) {
-        //     items.push([<ProductComponent product={products[i]} />]);
-        // }
+        var _this = this;
+        var items = [];
+        if (this.props.products) {
+            items = this.props.products
+                .map(function (item) { return React.createElement(product_component_1.ProductComponent, { key: item.id, product: item, buyItem: _this.props.buyItem }); });
+        }
         return (React.createElement("div", { className: "content" },
-            React.createElement("h1", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
+            React.createElement("h2", null, "\u0422\u043E\u0432\u0430\u0440\u044B"),
             items));
     };
     return ContentComponent;
 }(React.Component));
 exports.ContentComponent = ContentComponent;
 
-},{"./product.component":6,"react":67}],4:[function(require,module,exports){
+},{"./product.component":11,"react":73}],9:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -159,7 +244,7 @@ var FooterComponent = /** @class */ (function (_super) {
 }(React.Component));
 exports.FooterComponent = FooterComponent;
 
-},{"react":67}],5:[function(require,module,exports){
+},{"react":73}],10:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -208,7 +293,7 @@ var HeaderComponent = /** @class */ (function (_super) {
 }(React.Component));
 exports.HeaderComponent = HeaderComponent;
 
-},{"react":67}],6:[function(require,module,exports){
+},{"react":73}],11:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -224,28 +309,55 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var ProductComponent = /** @class */ (function (_super) {
     __extends(ProductComponent, _super);
-    function ProductComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function ProductComponent(props, state) {
+        var _this = _super.call(this, props, state) || this;
+        _this.raskritie = _this.raskritie.bind(_this); // Присваивает этой функции эту область видимости
+        return _this;
     }
+    ProductComponent.prototype.raskritie = function () {
+        if (this.state && this.state.podrobno) {
+            this.setState({ podrobno: false });
+        }
+        else {
+            this.setState({ podrobno: true });
+        }
+    };
     ProductComponent.prototype.render = function () {
+        var _this = this;
+        var product = this.props.product;
+        var descr = '';
+        var more = null;
+        var less = null;
+        if (this.state && this.state.podrobno) {
+            descr = product.description;
+            more = React.createElement("span", { className: "podrobno", onClick: this.raskritie }, "\u0443\u043C\u0435\u043D\u044C\u0448\u0438\u0442\u044C...");
+        }
+        else {
+            descr = product.description.substring(0, 200);
+            more = React.createElement("span", { className: "podrobno", onClick: this.raskritie }, "\u043F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435...");
+        }
         return (React.createElement("div", { className: "product" },
-            React.createElement("img", { src: this.props.product.photos[0] }),
-            "\u041F\u0440\u043E\u0434\u0443\u043A\u0442 ",
-            this.props.product.name,
             React.createElement("br", null),
-            this.props.product.description,
-            React.createElement("br", null),
-            "\u0426\u0435\u043D\u0430 ",
-            this.props.product.price,
-            "\u0440.",
+            React.createElement("h3", null, product.name),
+            React.createElement("hr", null),
             React.createElement("div", null,
-                React.createElement("div", null))));
+                React.createElement("img", { src: product.photos[0] })),
+            React.createElement("p", { className: "price" },
+                "\u0426\u0435\u043D\u0430 ",
+                product.price,
+                "\u0440."),
+            React.createElement("p", null,
+                descr,
+                " \u00A0",
+                more),
+            React.createElement("br", null),
+            React.createElement("button", { type: "button", onClick: function () { return _this.props.buyItem(product); } }, "\u041A\u0443\u043F\u0438\u0442\u044C")));
     };
     return ProductComponent;
 }(React.Component));
 exports.ProductComponent = ProductComponent;
 
-},{"react":67}],7:[function(require,module,exports){
+},{"react":73}],12:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -259,98 +371,153 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var categories_1 = require("../containers/categories");
+var categories_component_1 = require("./categories.component");
+var basket_component_1 = require("./basket.component");
 var SidebarComponent = /** @class */ (function (_super) {
     __extends(SidebarComponent, _super);
     function SidebarComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     SidebarComponent.prototype.render = function () {
+        //let myBasket = 
         return (React.createElement("div", { className: "sidebar" },
-            React.createElement(categories_1.Categories, null)));
+            "\u0411\u043E\u043A\u043E\u0432\u0430\u044F \u043F\u0430\u043D\u0435\u043B\u044C",
+            React.createElement(basket_component_1.BasketComponent, null),
+            React.createElement("div", { className: "sidebar__title" }, "\u041A\u0430\u0442\u0430\u043B\u043E\u0433"),
+            React.createElement(categories_component_1.CategoriesComponent, { selectCategory: this.props.selectCategory })));
     };
     return SidebarComponent;
 }(React.Component));
 exports.SidebarComponent = SidebarComponent;
 
-},{"../containers/categories":9,"react":67}],8:[function(require,module,exports){
+},{"./basket.component":6,"./categories.component":7,"react":73}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_redux_1 = require("react-redux");
 var app_component_1 = require("../components/app.component");
+var redux_1 = require("redux");
+var catalog_1 = require("../actions/catalog");
 function mapStateToProps(state) {
     return {
-        counter: state.catalog.counter
+        counter: state.catalog.counter,
     };
 }
-;
-exports.App = react_redux_1.connect(mapStateToProps)(app_component_1.AppComponent);
+function mapDispatchToProps(dispatch) {
+    return redux_1.bindActionCreators({
+        selectCategory: catalog_1.selectCategory,
+    }, dispatch);
+}
+exports.App = react_redux_1.connect(mapStateToProps, //ф-ция, добавляет новую информация в props
+mapDispatchToProps)(app_component_1.AppComponent);
 
-},{"../components/app.component":1,"react-redux":49}],9:[function(require,module,exports){
+},{"../actions/catalog":3,"../components/app.component":5,"react-redux":55,"redux":79}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var categories_component_1 = require("../components/categories.component");
+var redux_1 = require("redux");
 var react_redux_1 = require("react-redux");
-function mapStateToProps(state) {
-    return {
-        categories: state.catalog.categories
-    };
-}
-exports.Categories = react_redux_1.connect(mapStateToProps)(categories_component_1.CategoriesComponent);
-
-},{"../components/categories.component":2,"react-redux":49}],10:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var content_component_1 = require("../components/content.component");
-var react_redux_1 = require("react-redux");
+var actions_1 = require("../actions");
 function mapStateToProps(state) {
+    console.log(state);
     return {
-        products: state.catalog.items
+        counter: state.catalog.counter,
+        products: state.catalog.products,
     };
 }
-exports.Content = react_redux_1.connect(mapStateToProps)(content_component_1.ContentComponent);
+function mapDispatchToProps(dispatch) {
+    return redux_1.bindActionCreators({
+        buyItem: actions_1.buyItem,
+    }, dispatch);
+}
+exports.Content = react_redux_1.connect(mapStateToProps, //ф-ция, добавляет новую информация в props
+mapDispatchToProps)(content_component_1.ContentComponent);
 
-},{"../components/content.component":3,"react-redux":49}],11:[function(require,module,exports){
+},{"../actions":4,"../components/content.component":8,"react-redux":55,"redux":79}],15:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.demoProducts = [
+    {
+        id: 1,
+        name: 'Рабочая станция HP Z640 [Y3Y42EA]',
+        description: 'Высокопроизводительная рабочая станция HP Z640, выполненная в шумоизолированном корпусе, для обслуживания которого не требуются инструменты, позволит по-новому взглянуть на бизнес-решения. В HP Z640 объединены лучшие функции решений HP серии Z, благодаря чему вы сможете эффективно решать любые бизнес-задачи. Рабочая станция Z640 на базе Windows 10 отличается невероятными возможностями при малых габаритах. Решение поддерживает до 8 модулей памяти DIMM, до 4 жестких дисков, дополнительный контроллер Thunderbolt и накопители HP Z Turbo, благодаря чему обеспечивается эффективность хранения, высокая производительность и удобство работы. Корпус с шумоизоляцией разработан таким образом, чтобы доступ к компонентам рабочей станции можно было получить без использования инструментов. Он оснащен встроенным разъемом Gigabit Ethernet и удобными ручками (спереди и сзади), а благодаря высоте 4U его легко монтировать в стойку.',
+        price: 163999,
+        photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg'],
+        catId: 1,
+    },
+    {
+        id: 3,
+        name: 'Рабочая станция Dell Precision T5810-0231 [5810-0231]',
+        description: 'Dell Precision T5810 [5810-0231] представляет из себя надежный настольный ПК для дома и офиса, может так же использоваться как рабочая станция. Эксклюзивная запатентованная технология Reliable Memory Technology (RMT) компании Dell максимально увеличивает время безотказной работы и производительность. Работая в сочетании с памятью ECC, технология RMT обеспечивает обнаружение и исправление ошибок в реальном времени. Технология RMT сводит ошибки памяти практически к нулю: обращение к дефектной области памяти прекращается, а DIMM может по-прежнему использоваться. Путем простой перезагрузки системы RMT изолирует неисправную область памяти, фактически скрывая ее от ОС. Простота обновления: однократное обновление из любой точки с помощью уникальных расширений Dell Intel vPro для удаленного управления BIOS и удаления данных с жесткого диска,даже если система находится в автономном режиме. Dell Precision Optimizer 2.0 исключает работу вслепую,автоматически настраивая Intel Hyper-Threading, число ядер процессоров, графические ресурсы и питание. Комплектуется видеоадаптером Nvidia Quadro M2000.',
+        price: 149999,
+        photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/d5f2f65ca088547d237d659581b29b20/bc6991119fe73eaaacdb8e142cbb8fc28fbfeb290115386ff1a12b8dde17e534.jpg'],
+        catId: 2,
+    },
+];
+exports.demoCategories = [
+    {
+        id: 1,
+        name: 'Категория 1',
+    },
+    {
+        id: 2,
+        name: 'Категория 2',
+    },
+    {
+        id: 3,
+        name: 'Категория 3',
+    },
+    {
+        id: 4,
+        name: 'Категория 4',
+    },
+    {
+        id: 5,
+        name: 'Категория 5',
+    },
+];
+
+},{}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var ReactDOM = require("react-dom");
-var reducers_1 = require("./reducers");
 var redux_1 = require("redux");
 var react_redux_1 = require("react-redux");
+var reducers_1 = require("./reducers");
 var app_1 = require("./containers/app");
+var demoData_1 = require("./demoData");
 var store = redux_1.createStore(reducers_1.combine);
 store.dispatch({
     type: 'SET_CATALOG',
-    items: [
-        {
-            id: 1,
-            name: 'string',
-            description: 'string',
-            price: 1,
-            photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
-        }
-    ]
+    counter: 0,
+    products: demoData_1.demoProducts,
 });
 store.dispatch({
-    type: 'SET_CATALOG',
-    items: [
-        {
-            id: 1,
-            name: 'stringwww',
-            description: 'string',
-            price: 1222,
-            photos: ['https://c.dns-shop.ru/thumb/st1/fit/800/650/0266c3fa007cecb0df13be26b147097a/2f174dccf17e7aa1c149e630dc6656c4398d351b0ab6557659c0a70632656bdc.jpg']
-        }
-    ]
+    type: 'INC_CATALOG',
 });
 store.dispatch({
-    type: 'LOW',
+    type: 'SET_BASKET',
+    items: [],
 });
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store },
     React.createElement(app_1.App, null)), document.getElementById('app'));
 
-},{"./containers/app":8,"./reducers":13,"react":67,"react-dom":39,"react-redux":49,"redux":73}],12:[function(require,module,exports){
+},{"./containers/app":13,"./demoData":15,"./reducers":19,"react":73,"react-dom":45,"react-redux":55,"redux":79}],17:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.basket = function (state, action) {
+    if (!state)
+        state = {
+            items: [],
+        };
+    switch (action.type) {
+        case 'SET_BASKET': //console.log('SET_BASKET it works');
+        default:
+    }
+    return state;
+};
+
+},{}],18:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -361,34 +528,52 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var demoData_1 = require("../demoData");
 exports.catalog = function (state, action) {
     console.log('state', state, 'action', action);
     if (!state) {
         state = {
-            items: [],
+            products: [],
             categories: [],
-            counter: 0
+            counter: 0,
         };
     }
     switch (action.type) {
         case 'SET_CATALOG':
-            return __assign({}, state, { items: action.items, counter: state.counter + 1 });
-        case 'LOW':
-            return __assign({}, state, { counter: state.counter - 1 });
+            console.log('SET_CATALOG it works');
+            state = __assign({}, state, { counter: 1, products: action.products });
+            console.log('counter ', state.counter);
+            return state;
+        case 'DEC_CATALOG':
+            console.log('DEC_CATALOG it reduces');
+            state = __assign({}, state, { counter: state.counter - 1, products: [] });
+            console.log('counter ', state.counter);
+            return state;
+        case 'INC_CATALOG':
+            console.log('INC_CATALOG it reduces');
+            state = __assign({}, state, { counter: state.counter + 1 });
+            console.log('counter ', state.counter);
+            return state;
+        case 'SELECT_CATALOG':
+            state = __assign({}, state, { products: demoData_1.demoProducts.filter(function (item) { return item.catId === action.categoryId; }) });
+            return state;
         default:
     }
     return state;
 };
 
-},{}],13:[function(require,module,exports){
+},{"../demoData":15}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = require("redux");
 var catalog_1 = require("./catalog");
-exports.combine = redux_1.combineReducers({ catalog: catalog_1.catalog } // можно просто {catalog}
-);
+var basket_1 = require("./basket");
+exports.combine = redux_1.combineReducers({
+    catalog: catalog_1.catalog,
+    basket: basket_1.basket,
+});
 
-},{"./catalog":12,"redux":73}],14:[function(require,module,exports){
+},{"./basket":17,"./catalog":18,"redux":79}],20:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -422,7 +607,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],15:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -452,7 +637,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],16:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -490,7 +675,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":15}],17:[function(require,module,exports){
+},{"./camelize":21}],23:[function(require,module,exports){
 'use strict';
 
 /**
@@ -528,7 +713,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":25}],18:[function(require,module,exports){
+},{"./isTextNode":31}],24:[function(require,module,exports){
 "use strict";
 
 /**
@@ -565,7 +750,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],19:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -585,7 +770,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":31}],20:[function(require,module,exports){
+},{"_process":37}],26:[function(require,module,exports){
 'use strict';
 
 /**
@@ -622,7 +807,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],21:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 /**
@@ -653,7 +838,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],22:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -690,7 +875,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":21}],23:[function(require,module,exports){
+},{"./hyphenate":27}],29:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -746,7 +931,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":31}],24:[function(require,module,exports){
+},{"_process":37}],30:[function(require,module,exports){
 'use strict';
 
 /**
@@ -769,7 +954,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],25:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 /**
@@ -792,7 +977,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":24}],26:[function(require,module,exports){
+},{"./isNode":30}],32:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -858,7 +1043,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],27:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -923,7 +1108,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":18,"_process":31}],28:[function(require,module,exports){
+},{"./emptyFunction":24,"_process":37}],34:[function(require,module,exports){
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -997,7 +1182,7 @@ module.exports = warning;
     };
 })));
 
-},{}],29:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1050,7 +1235,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":31}],30:[function(require,module,exports){
+},{"_process":37}],36:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -1142,7 +1327,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],31:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -1328,7 +1513,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],32:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1391,7 +1576,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":36,"_process":31,"fbjs/lib/invariant":23,"fbjs/lib/warning":27}],33:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":42,"_process":37,"fbjs/lib/invariant":29,"fbjs/lib/warning":33}],39:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1451,7 +1636,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":36,"fbjs/lib/emptyFunction":18,"fbjs/lib/invariant":23}],34:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":42,"fbjs/lib/emptyFunction":24,"fbjs/lib/invariant":29}],40:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1997,7 +2182,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":32,"./lib/ReactPropTypesSecret":36,"_process":31,"fbjs/lib/emptyFunction":18,"fbjs/lib/invariant":23,"fbjs/lib/warning":27,"object-assign":30}],35:[function(require,module,exports){
+},{"./checkPropTypes":38,"./lib/ReactPropTypesSecret":42,"_process":37,"fbjs/lib/emptyFunction":24,"fbjs/lib/invariant":29,"fbjs/lib/warning":33,"object-assign":36}],41:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2029,7 +2214,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":33,"./factoryWithTypeCheckers":34,"_process":31}],36:[function(require,module,exports){
+},{"./factoryWithThrowingShims":39,"./factoryWithTypeCheckers":40,"_process":37}],42:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2043,7 +2228,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],37:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.1
  * react-dom.development.js
@@ -18671,7 +18856,7 @@ module.exports = reactDom;
 }
 
 }).call(this,require('_process'))
-},{"_process":31,"fbjs/lib/ExecutionEnvironment":14,"fbjs/lib/camelizeStyleName":16,"fbjs/lib/containsNode":17,"fbjs/lib/emptyFunction":18,"fbjs/lib/emptyObject":19,"fbjs/lib/getActiveElement":20,"fbjs/lib/hyphenateStyleName":22,"fbjs/lib/invariant":23,"fbjs/lib/shallowEqual":26,"fbjs/lib/warning":27,"object-assign":30,"prop-types/checkPropTypes":32,"react":67}],38:[function(require,module,exports){
+},{"_process":37,"fbjs/lib/ExecutionEnvironment":20,"fbjs/lib/camelizeStyleName":22,"fbjs/lib/containsNode":23,"fbjs/lib/emptyFunction":24,"fbjs/lib/emptyObject":25,"fbjs/lib/getActiveElement":26,"fbjs/lib/hyphenateStyleName":28,"fbjs/lib/invariant":29,"fbjs/lib/shallowEqual":32,"fbjs/lib/warning":33,"object-assign":36,"prop-types/checkPropTypes":38,"react":73}],44:[function(require,module,exports){
 /** @license React v16.3.1
  * react-dom.production.min.js
  *
@@ -18918,7 +19103,7 @@ var Gg={createPortal:Fg,findDOMNode:function(a){if(null==a)return null;if(1===a.
 D("40");return a._reactRootContainer?(X.unbatchedUpdates(function(){Eg(null,null,a,!1,function(){a._reactRootContainer=null})}),!0):!1},unstable_createPortal:function(){return Fg.apply(void 0,arguments)},unstable_batchedUpdates:X.batchedUpdates,unstable_deferredUpdates:X.deferredUpdates,flushSync:X.flushSync,unstable_flushControlled:X.flushControlled,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{EventPluginHub:Qa,EventPluginRegistry:xa,EventPropagators:jb,ReactControlledComponent:Zb,ReactDOMComponentTree:Xa,
 ReactDOMEventListener:Zd},unstable_createRoot:function(a,b){return new sg(a,!0,null!=b&&!0===b.hydrate)}};X.injectIntoDevTools({findFiberByHostInstance:Ta,bundleType:0,version:"16.3.1",rendererPackageName:"react-dom"});var Hg=Object.freeze({default:Gg}),Ig=Hg&&Gg||Hg;module.exports=Ig["default"]?Ig["default"]:Ig;
 
-},{"fbjs/lib/ExecutionEnvironment":14,"fbjs/lib/containsNode":17,"fbjs/lib/emptyFunction":18,"fbjs/lib/emptyObject":19,"fbjs/lib/getActiveElement":20,"fbjs/lib/shallowEqual":26,"object-assign":30,"react":67}],39:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":20,"fbjs/lib/containsNode":23,"fbjs/lib/emptyFunction":24,"fbjs/lib/emptyObject":25,"fbjs/lib/getActiveElement":26,"fbjs/lib/shallowEqual":32,"object-assign":36,"react":73}],45:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -18960,7 +19145,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":37,"./cjs/react-dom.production.min.js":38,"_process":31}],40:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":43,"./cjs/react-dom.production.min.js":44,"_process":37}],46:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19049,7 +19234,7 @@ function createProvider() {
 
 exports.default = createProvider();
 }).call(this,require('_process'))
-},{"../utils/PropTypes":50,"../utils/warning":54,"_process":31,"prop-types":35,"react":67}],41:[function(require,module,exports){
+},{"../utils/PropTypes":56,"../utils/warning":60,"_process":37,"prop-types":41,"react":73}],47:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19358,7 +19543,7 @@ selectorFactory) {
   };
 }
 }).call(this,require('_process'))
-},{"../utils/PropTypes":50,"../utils/Subscription":51,"_process":31,"hoist-non-react-statics":28,"invariant":29,"react":67}],42:[function(require,module,exports){
+},{"../utils/PropTypes":56,"../utils/Subscription":57,"_process":37,"hoist-non-react-statics":34,"invariant":35,"react":73}],48:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19487,7 +19672,7 @@ function createConnect() {
 }
 
 exports.default = createConnect();
-},{"../components/connectAdvanced":41,"../utils/shallowEqual":52,"./mapDispatchToProps":43,"./mapStateToProps":44,"./mergeProps":45,"./selectorFactory":46}],43:[function(require,module,exports){
+},{"../components/connectAdvanced":47,"../utils/shallowEqual":58,"./mapDispatchToProps":49,"./mapStateToProps":50,"./mergeProps":51,"./selectorFactory":52}],49:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19516,7 +19701,7 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 }
 
 exports.default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
-},{"./wrapMapToProps":48,"redux":73}],44:[function(require,module,exports){
+},{"./wrapMapToProps":54,"redux":79}],50:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19536,7 +19721,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 }
 
 exports.default = [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing];
-},{"./wrapMapToProps":48}],45:[function(require,module,exports){
+},{"./wrapMapToProps":54}],51:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19597,7 +19782,7 @@ function whenMergePropsIsOmitted(mergeProps) {
 
 exports.default = [whenMergePropsIsFunction, whenMergePropsIsOmitted];
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":53,"_process":31}],46:[function(require,module,exports){
+},{"../utils/verifyPlainObject":59,"_process":37}],52:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19713,7 +19898,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   return selectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
 }
 }).call(this,require('_process'))
-},{"./verifySubselectors":47,"_process":31}],47:[function(require,module,exports){
+},{"./verifySubselectors":53,"_process":37}],53:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19740,7 +19925,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
   verify(mapDispatchToProps, 'mapDispatchToProps', displayName);
   verify(mergeProps, 'mergeProps', displayName);
 }
-},{"../utils/warning":54}],48:[function(require,module,exports){
+},{"../utils/warning":60}],54:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19821,7 +20006,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
   };
 }
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":53,"_process":31}],49:[function(require,module,exports){
+},{"../utils/verifyPlainObject":59,"_process":37}],55:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19845,7 +20030,7 @@ exports.Provider = _Provider2.default;
 exports.createProvider = _Provider.createProvider;
 exports.connectAdvanced = _connectAdvanced2.default;
 exports.connect = _connect2.default;
-},{"./components/Provider":40,"./components/connectAdvanced":41,"./connect/connect":42}],50:[function(require,module,exports){
+},{"./components/Provider":46,"./components/connectAdvanced":47,"./connect/connect":48}],56:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -19869,7 +20054,7 @@ var storeShape = exports.storeShape = _propTypes2.default.shape({
   dispatch: _propTypes2.default.func.isRequired,
   getState: _propTypes2.default.func.isRequired
 });
-},{"prop-types":35}],51:[function(require,module,exports){
+},{"prop-types":41}],57:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -19966,7 +20151,7 @@ var Subscription = function () {
 }();
 
 exports.default = Subscription;
-},{}],52:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -20001,7 +20186,7 @@ function shallowEqual(objA, objB) {
 
   return true;
 }
-},{}],53:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -20022,7 +20207,7 @@ function verifyPlainObject(value, displayName, methodName) {
     (0, _warning2.default)(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
 }
-},{"./warning":54,"lodash/isPlainObject":64}],54:[function(require,module,exports){
+},{"./warning":60,"lodash/isPlainObject":70}],60:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -20048,7 +20233,7 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-},{}],55:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -20056,7 +20241,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-},{"./_root":62}],56:[function(require,module,exports){
+},{"./_root":68}],62:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -20086,7 +20271,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-},{"./_Symbol":55,"./_getRawTag":59,"./_objectToString":60}],57:[function(require,module,exports){
+},{"./_Symbol":61,"./_getRawTag":65,"./_objectToString":66}],63:[function(require,module,exports){
 (function (global){
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -20094,7 +20279,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 module.exports = freeGlobal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],58:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var overArg = require('./_overArg');
 
 /** Built-in value references. */
@@ -20102,7 +20287,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
 
 module.exports = getPrototype;
 
-},{"./_overArg":61}],59:[function(require,module,exports){
+},{"./_overArg":67}],65:[function(require,module,exports){
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -20150,7 +20335,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-},{"./_Symbol":55}],60:[function(require,module,exports){
+},{"./_Symbol":61}],66:[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -20174,7 +20359,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-},{}],61:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -20191,7 +20376,7 @@ function overArg(func, transform) {
 
 module.exports = overArg;
 
-},{}],62:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -20202,7 +20387,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-},{"./_freeGlobal":57}],63:[function(require,module,exports){
+},{"./_freeGlobal":63}],69:[function(require,module,exports){
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -20233,7 +20418,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],64:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     getPrototype = require('./_getPrototype'),
     isObjectLike = require('./isObjectLike');
@@ -20297,7 +20482,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_baseGetTag":56,"./_getPrototype":58,"./isObjectLike":63}],65:[function(require,module,exports){
+},{"./_baseGetTag":62,"./_getPrototype":64,"./isObjectLike":69}],71:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.1
  * react.development.js
@@ -21710,7 +21895,7 @@ module.exports = react;
 }
 
 }).call(this,require('_process'))
-},{"_process":31,"fbjs/lib/emptyFunction":18,"fbjs/lib/emptyObject":19,"fbjs/lib/invariant":23,"fbjs/lib/warning":27,"object-assign":30,"prop-types/checkPropTypes":32}],66:[function(require,module,exports){
+},{"_process":37,"fbjs/lib/emptyFunction":24,"fbjs/lib/emptyObject":25,"fbjs/lib/invariant":29,"fbjs/lib/warning":33,"object-assign":36,"prop-types/checkPropTypes":38}],72:[function(require,module,exports){
 /** @license React v16.3.1
  * react.production.min.js
  *
@@ -21734,7 +21919,7 @@ _calculateChangedBits:b,_defaultValue:a,_currentValue:a,_changedBits:0,Provider:
 c)&&!J.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==k?k[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){k=Array(c);for(var l=0;l<c;l++)k[l]=arguments[l+2];d.children=k}return{$$typeof:r,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=K.bind(null,a);b.type=a;return b},isValidElement:L,version:"16.3.1",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:H,assign:m}},W=Object.freeze({default:V}),X=W&&V||W;
 module.exports=X["default"]?X["default"]:X;
 
-},{"fbjs/lib/emptyFunction":18,"fbjs/lib/emptyObject":19,"object-assign":30}],67:[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":24,"fbjs/lib/emptyObject":25,"object-assign":36}],73:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -21745,7 +21930,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":65,"./cjs/react.production.min.js":66,"_process":31}],68:[function(require,module,exports){
+},{"./cjs/react.development.js":71,"./cjs/react.production.min.js":72,"_process":37}],74:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -21804,7 +21989,7 @@ function applyMiddleware() {
     };
   };
 }
-},{"./compose":71}],69:[function(require,module,exports){
+},{"./compose":77}],75:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -21856,7 +22041,7 @@ function bindActionCreators(actionCreators, dispatch) {
   }
   return boundActionCreators;
 }
-},{}],70:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -22002,7 +22187,7 @@ function combineReducers(reducers) {
   };
 }
 }).call(this,require('_process'))
-},{"./createStore":72,"./utils/warning":74,"_process":31,"lodash/isPlainObject":84}],71:[function(require,module,exports){
+},{"./createStore":78,"./utils/warning":80,"_process":37,"lodash/isPlainObject":90}],77:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22039,7 +22224,7 @@ function compose() {
     };
   });
 }
-},{}],72:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -22301,7 +22486,7 @@ var ActionTypes = exports.ActionTypes = {
     replaceReducer: replaceReducer
   }, _ref2[_symbolObservable2['default']] = observable, _ref2;
 }
-},{"lodash/isPlainObject":84,"symbol-observable":85}],73:[function(require,module,exports){
+},{"lodash/isPlainObject":90,"symbol-observable":91}],79:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -22350,7 +22535,7 @@ exports.bindActionCreators = _bindActionCreators2['default'];
 exports.applyMiddleware = _applyMiddleware2['default'];
 exports.compose = _compose2['default'];
 }).call(this,require('_process'))
-},{"./applyMiddleware":68,"./bindActionCreators":69,"./combineReducers":70,"./compose":71,"./createStore":72,"./utils/warning":74,"_process":31}],74:[function(require,module,exports){
+},{"./applyMiddleware":74,"./bindActionCreators":75,"./combineReducers":76,"./compose":77,"./createStore":78,"./utils/warning":80,"_process":37}],80:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -22376,27 +22561,27 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-},{}],75:[function(require,module,exports){
-arguments[4][55][0].apply(exports,arguments)
-},{"./_root":82,"dup":55}],76:[function(require,module,exports){
-arguments[4][56][0].apply(exports,arguments)
-},{"./_Symbol":75,"./_getRawTag":79,"./_objectToString":80,"dup":56}],77:[function(require,module,exports){
-arguments[4][57][0].apply(exports,arguments)
-},{"dup":57}],78:[function(require,module,exports){
-arguments[4][58][0].apply(exports,arguments)
-},{"./_overArg":81,"dup":58}],79:[function(require,module,exports){
-arguments[4][59][0].apply(exports,arguments)
-},{"./_Symbol":75,"dup":59}],80:[function(require,module,exports){
-arguments[4][60][0].apply(exports,arguments)
-},{"dup":60}],81:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"dup":61}],82:[function(require,module,exports){
+},{"./_root":88,"dup":61}],82:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"./_freeGlobal":77,"dup":62}],83:[function(require,module,exports){
+},{"./_Symbol":81,"./_getRawTag":85,"./_objectToString":86,"dup":62}],83:[function(require,module,exports){
 arguments[4][63][0].apply(exports,arguments)
 },{"dup":63}],84:[function(require,module,exports){
 arguments[4][64][0].apply(exports,arguments)
-},{"./_baseGetTag":76,"./_getPrototype":78,"./isObjectLike":83,"dup":64}],85:[function(require,module,exports){
+},{"./_overArg":87,"dup":64}],85:[function(require,module,exports){
+arguments[4][65][0].apply(exports,arguments)
+},{"./_Symbol":81,"dup":65}],86:[function(require,module,exports){
+arguments[4][66][0].apply(exports,arguments)
+},{"dup":66}],87:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"dup":67}],88:[function(require,module,exports){
+arguments[4][68][0].apply(exports,arguments)
+},{"./_freeGlobal":83,"dup":68}],89:[function(require,module,exports){
+arguments[4][69][0].apply(exports,arguments)
+},{"dup":69}],90:[function(require,module,exports){
+arguments[4][70][0].apply(exports,arguments)
+},{"./_baseGetTag":82,"./_getPrototype":84,"./isObjectLike":89,"dup":70}],91:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -22428,7 +22613,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":86}],86:[function(require,module,exports){
+},{"./ponyfill.js":92}],92:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22452,4 +22637,4 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}]},{},[11]);
+},{}]},{},[16]);

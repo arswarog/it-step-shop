@@ -1,32 +1,55 @@
 import { Product, Category } from '../app/classes';
+import { demoProducts } from '../demoData';
 
 export interface ICatalog {
-    items: Product[];
+    products: Product[];
     categories: Category[];
     counter: number;
 }
-export var catalog = function(state: ICatalog, action) {
+
+export var catalog = function (state: ICatalog, action) {
     console.log('state', state, 'action', action);
     if (!state) {
         state = {
-            items: [],
+            products: [],
             categories: [],
-            counter: 0
-        }
+            counter: 0,
+        };
     }
-    switch(action.type) {
+    switch (action.type) {
         case 'SET_CATALOG':
-            return {
+            console.log('SET_CATALOG it works');
+            state = {
                 ...state,
-                items: action.items,
-                counter: state.counter+1
+                counter: 1,
+                products: action.products,
             };
-        case 'LOW':
-            return {
+            console.log('counter ', state.counter);
+            return state;
+        case 'DEC_CATALOG':
+            console.log('DEC_CATALOG it reduces');
+            state = {
                 ...state,
-                counter: state.counter-1
-            }
+                counter: state.counter - 1,
+                products: [],
+            };
+            console.log('counter ', state.counter);
+            return state;
+        case 'INC_CATALOG':
+            console.log('INC_CATALOG it reduces');
+            state = {
+                ...state,
+                counter: state.counter + 1,
+            };
+            console.log('counter ', state.counter);
+            return state;
+        case 'SELECT_CATALOG':
+            state = {
+                ...state,
+                products: demoProducts.filter(item => item.catId === action.categoryId),
+            };
+            return state;
         default:
     }
     return state;
-}
+};
