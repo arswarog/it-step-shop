@@ -1,24 +1,26 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ContentComponent } from '../components/content.component';
 import { ICombineState } from '../reducers';
 import { buyItem } from '../actions';
+import { BasketContentComponent } from '../components/basketContent.component';
+
 
 function mapStateToProps(state: ICombineState) {
     //console.log(state);
     return {
         counter : state.catalog.counter,
-        products: state.catalog.products,
+        items   : state.basket.items
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        buyItem,
-    }, dispatch);
-}
+// function mapDispatchToProps(dispatch) {
+//     return bindActionCreators({
+//         increase,
+//         decrease
+//     }, dispatch);
+// }
 
-export var Content = connect(
+export var BasketContent = connect(
     mapStateToProps, //ф-ция, добавляет новую информация в props
-    mapDispatchToProps,
-)(ContentComponent);
+    //mapDispatchToProps,
+)(BasketContentComponent);

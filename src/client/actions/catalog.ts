@@ -11,15 +11,15 @@ export function addCounter() {
     }
 }
 
-export function buyItem(item: Product) {
-    //alert('Вы купили!');
-    // return {
-    //     type: ActionTypes.BUY_ITEM,
-    //     item,
-    // };
-    // return {
-    //     type    : 'SET_CATALOG',
-    //     counter : 0,
-    //     products: [],
-    // }
-}
+// export function buyItem(item: Product) {
+//     //alert('Вы купили!');
+//     // return {
+//     //     type: ActionTypes.BUY_ITEM,
+//     //     item,
+//     // };
+//     // return {
+//     //     type    : 'SET_CATALOG',
+//     //     counter : 0,
+//     //     products: [],
+//     // }
+// }

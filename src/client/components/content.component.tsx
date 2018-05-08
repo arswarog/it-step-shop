@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ProductComponent } from './product.component';
 import { Product } from '../app/classes';
-import { Product as ProductCont } from '../containers/product';
 
 export interface IContentState {
 }
@@ -9,13 +8,19 @@ export interface IContentState {
 export interface IContentProps {
     counter: number;
     products: Product[];
+    buyItem: (item: Product) => any,
 }
 
 export class ContentComponent extends React.Component<IContentProps, IContentState> {
     render() {
         let items = [];
         if (this.props.products) {
-            items = this.props.products.map(item => <ProductCont key={ item.id } product={ item }/>);
+            items = this.props.products
+                        .map(item => <ProductComponent
+                            key={ item.id }
+                            product={ item }
+                            buyItem={ this.props.buyItem }
+                        />);
         }
 
         return (

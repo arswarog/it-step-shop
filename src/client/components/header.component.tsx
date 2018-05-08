@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 
 export interface IHeaderState {
 }
@@ -34,6 +35,9 @@ export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="#">Контакты</a>
+                    </li>
+                    <li className="nav-item">
+                        {/* <Link to="/basket">Корзина</Link> */}
                     </li>
                 </ul>
                 <div className="header__right-box">

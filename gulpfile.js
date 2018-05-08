@@ -75,7 +75,10 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('live', [], function () {
-    browserSync({server: './web'});
+    browserSync({
+        server: './web',
+        single: true,
+    });
 });
 
 gulp.task('watch', ['build', 'live'], function () {
