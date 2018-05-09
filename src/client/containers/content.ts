@@ -19,6 +19,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export var Content = connect(
-    mapStateToProps, //ф-ция, добавляет новую информация в props
+    mapStateToProps, //ф-ция, добавляет новую информацию в props
     mapDispatchToProps,
 )(ContentComponent);

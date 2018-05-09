@@ -25,8 +25,8 @@ export class CategoriesComponent extends React.Component<ICategoriesProps, ICate
                 <div className="list-group-item rounded-0 border-right-0 border-left-0 border-top-0">
                     <strong>Каталог товаров</strong>
                 </div>
-                {items}
-            </div>
+                    {items}
+                </div>
         );
     }
 }
