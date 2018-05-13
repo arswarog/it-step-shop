@@ -20,9 +20,9 @@ export class AppComponent extends React.Component<any, any> {
                 {/* <Content/> */}
                 <BrowserRouter>
                     <Switch>
-                        {/* <Route exact path="/" component={Main} />
-                        <Route path="/about" component={About} />
-                        <Route component={NotFound} /> */}
+                        <Route exact path="/" component={Content} />
+                        <Route path="/basket" component={BasketContent} />
+                        {/*<Route component={NotFound} /> */}
                     </Switch>
                 </BrowserRouter>
                 <FooterComponent />

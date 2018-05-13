@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ContentComponent } from '../components/content.component';
+import { ContentComponent } from '../pages/content.component';
 import { ICombineState } from '../reducers';
 import { buyItem } from '../actions';
 

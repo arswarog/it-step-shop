@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Product, BasketItem } from '../app/classes';
+import { Link, NavLink } from 'react-router-dom';
 
 export interface IBasketState {
     count: number,
@@ -67,8 +68,8 @@ export class BasketComponent extends React.Component<IBasketProps, IBasketState>
               
             <div className="basket" onClick={this.alert}>
                 {this.props.items.map(item => (<li key={ item.id }>
-                    {item.name} "*" {item.count}
-                    </li>))} 
+                    {item.name} X {item.count}
+                    </li>))}
             </div>
         )
     }

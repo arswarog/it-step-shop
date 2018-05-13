@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { ProductComponent } from './product.component';
+import { ProductComponent } from '../components/product.component';
 import { Product } from '../app/classes';
+import { Link } from 'react-router-dom';
 
 export interface IContentState {
 }
@@ -25,7 +26,9 @@ export class ContentComponent extends React.Component<IContentProps, IContentSta
 
         return (
             <div className="content">
-                <h2>Товары</h2>
+                <h2>Товары</h2>               
+                
+                <Link to="/basket">Перейти в корзину</Link>
                 { items }
             </div>
         );

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { BasketContent } from '../containers/basketcontent';
-import { HeaderComponent } from './header.component';
-import { SidebarComponent } from './sidebar.component';
-import { FooterComponent } from './footer.component';
+import { HeaderComponent } from '../components/header.component';
+import { SidebarComponent } from '../components/sidebar.component';
+import { FooterComponent } from '../components/footer.component';
 import { Basket } from '../containers/basket';
 import { BasketItem } from '../app/classes';
+import { NavLink, Link } from 'react-router-dom';
 
 export interface IBasketContentProps {
     count: number,
@@ -18,7 +19,7 @@ export class BasketContentComponent extends React.Component<IBasketContentProps>
             items = this.props.items
                         .map(item => <div
                             key={ item.id }>
-                           [] { item.name } { item.price } * { item.count } 
+                           { item.name } { item.price } X { item.count } 
                         </div>);
         }
 

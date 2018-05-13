@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ICombineState } from '../reducers';
 import { buyItem } from '../actions';
-import { BasketContentComponent } from '../components/basketContent.component';
+import { BasketContentComponent } from '../pages/basketContent.component';
 
 
 function mapStateToProps(state: ICombineState) {
@@ -23,4 +23,4 @@ function mapStateToProps(state: ICombineState) {
 export var BasketContent = connect(
     mapStateToProps, //ф-ция, добавляет новую информация в props
     //mapDispatchToProps,
-)(BasketContentComponent);
+)(BasketContentComponent as any);
